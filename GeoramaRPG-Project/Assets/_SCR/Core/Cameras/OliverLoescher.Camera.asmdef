@@ -1,0 +1,20 @@
+{
+    "name": "OliverLoescher.Camera",
+    "rootNamespace": "OliverLoescher.Camera",
+    "references": [
+        "GUID:5b10c1f9ecd537f4dbe3d211152286e8",
+        "GUID:81741247162146e40bdf68cc474125d7",
+        "GUID:1347e37f53d1f5c489b2d499baae4ef6",
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:4307f53044263cf4b835bd812fc161a4"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

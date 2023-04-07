@@ -1,0 +1,18 @@
+{
+    "name": "BruteForce.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:0f6ebdb6df55a8a46aad4769ae7f9a07"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

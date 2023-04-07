@@ -1,0 +1,18 @@
+{
+    "name": "OliverLoescher.Editor",
+    "rootNamespace": "OliverLoescher.Editor",
+    "references": [
+        "GUID:5b10c1f9ecd537f4dbe3d211152286e8"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
