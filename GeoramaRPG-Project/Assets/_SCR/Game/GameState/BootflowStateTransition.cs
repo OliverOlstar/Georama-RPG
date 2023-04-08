@@ -60,7 +60,7 @@ public class BootflowStateTransition : GameStateTransition
 		// DBManager.Initialize(variant, handle.GetAsset().m_DataSOs);
 		// Log("Finished initializing data");
 
-		
+
 		// List<string> bundleNames = ListPool<string>.Request();
 		// Director.GetOrCreate<BundleDownloadService>().GetSortedHotfixPriorityBundleNames(bundleNames);
 		// // TODO: Potentially do not want to include this log in release.
@@ -97,7 +97,7 @@ public class BootflowStateTransition : GameStateTransition
 		// 	yield return m_StateTransition.AwaitAsyncSceneLoad(GamePaths.Menus.SceneName_Shared, true, false, true); // TODO make this async
 		// }
 
-		// Account Setup
+		// --------------- Account Setup ---------------
 		Log("Initialize account");
 		PlayerAccount account = Director.GetOrCreate<PlayerAccount>();
 		account.InitializeFromDisk();
@@ -107,7 +107,15 @@ public class BootflowStateTransition : GameStateTransition
 
 	protected override IEnumerator OnFinish(object stateChangeData)
 	{
-		Log("Account initialized choosing game state");
+		Log("Bootflow complete, choosing game state");
+#if UNITY_EDITOR
+		if (QuickPlay.TryGetBootToScene(out string sceneName))
+		{
+			Log($"QuickPlay override, loading Scene {sceneName}.");
+			GameStateManager.RequestState(GameState.Testing, new EmptyStateTransition.Context() { SceneName = sceneName });
+			yield break;
+		}
+#endif
 		if (GeoDebugOptions.BootToState.IsEnumSet(out GeoDebugOptions.BootTo state))
 		{
 			switch (state)
