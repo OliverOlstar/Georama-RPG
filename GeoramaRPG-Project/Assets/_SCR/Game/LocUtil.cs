@@ -73,13 +73,12 @@ public static class LocUtil
 
 	private static string ApplyLanguageSpecificFixes(string ret)
 	{
-		switch(LocalizationManager.CurrentLanguage)
-		{
-			// case string thaiLanguage when LocalizationManager.CurrentLanguageCode.Equals(THAI_LANGUAGE_CODE, System.StringComparison.OrdinalIgnoreCase):
-			// 	ret = ThaiFontAdjuster.Adjust(ret);
-			// 	break;
-		}
-
+		// switch(LocalizationManager.CurrentLanguage)
+		// {
+		// 	case string thaiLanguage when LocalizationManager.CurrentLanguageCode.Equals(THAI_LANGUAGE_CODE, System.StringComparison.OrdinalIgnoreCase):
+		// 		ret = ThaiFontAdjuster.Adjust(ret);
+		// 		break;
+		// }
 		return ret;
 	}
 

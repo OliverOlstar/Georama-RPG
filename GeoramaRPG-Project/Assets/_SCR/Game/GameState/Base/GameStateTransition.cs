@@ -35,7 +35,6 @@ public abstract class GameStateTransition
 		yield return OnFinish(stateChangeData);
 	}
 
-	public virtual bool IsInternetRequired => false;
 	public virtual ThreadPriority ThreadPriority => ThreadPriority.Low;
 
 	protected virtual IEnumerator OnUnload(object stateChangeData, GameState previousState)

@@ -33,9 +33,8 @@ public class GameStart : MonoBehaviour
 		m_Logger.Log("Dev cheat menu start");
 		if (GeoDebugOptions.OpenCheatMenuOnBoot.IsSet())
 		{
-			CheatMenu cheatMenu = obj.GetComponent<CheatMenu>();
-			cheatMenu.ForceOpen();
-			while (cheatMenu.IsOpen)
+			CheatMenu.Open();
+			while (CheatMenu.IsOpen)
 			{
 				yield return null;
 			}

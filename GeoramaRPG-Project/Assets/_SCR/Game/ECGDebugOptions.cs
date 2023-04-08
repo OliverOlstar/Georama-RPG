@@ -6,6 +6,5 @@ using UnityEngine;
 [Core.DebugOptionList]
 public class ECGDebugOptions
 {
-	public static readonly DebugOption ForceDebugLoc =			new DebugOption.String(DebugOption.Group.Misc, "Force Debug Loc", defaultSetting: DebugOption.DefaultSetting.Off);
-	public static readonly DebugOption DebugEditorToggleAds =	new DebugOption.Toggle(DebugOption.Group.Editor, "Editor Toggle Ads", DebugOption.DefaultSetting.On);
+	public static readonly DebugOption ForceDebugLoc = new DebugOption.String(DebugOption.Group.Misc, "Force Debug Loc", defaultSetting: DebugOption.DefaultSetting.Off);
 }

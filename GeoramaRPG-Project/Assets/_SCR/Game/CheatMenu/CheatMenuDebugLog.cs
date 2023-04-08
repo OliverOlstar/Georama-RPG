@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class CheatMenuDebugLog : CheatMenuPage
 {
+	public override CheatMenuGroup Group => CheatMenuOkoGroups.DEBUG;
 	public override string Name => "Logs";
+	public override bool IsAvailable() => true;
+
 	private static Vector2 m_ScrollPosition = Vector2.zero;
 	private static string[] m_Filters = null;
 	private static string m_SourceFilters = string.Empty;
@@ -16,8 +19,6 @@ public class CheatMenuDebugLog : CheatMenuPage
 
 	private static Queue<string> m_Logs = new Queue<string>();
 	private static bool m_Pause = false;
-
-	public override bool IsAvailable() => true;
 
 	public static void Init()
 	{
@@ -102,7 +103,6 @@ public class CheatMenuDebugLog : CheatMenuPage
 
 	public override void DrawGUI()
 	{
-		base.DrawGUI();
 		string pauseButtonString = m_Pause ? "Resume" : "Pause";
 		GUILayout.BeginHorizontal();
 		if (GUILayout.Button(pauseButtonString))

@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CheatMenuGameStatePage : CheatMenuPage
 {
-	public override string Name => "Game State";
+	public override CheatMenuGroup Group => CheatMenuOkoGroups.GAME_STATE;
+	public override bool IsAvailable() => base.IsAvailable() || GameStateManager.GameState == GameState.Testing;
 
 	public override void DrawGUI()
 	{
-		foreach (GameState gameState in Enum.GetValues(typeof(GameState)))
+		GUILayout.Label("GameStates");
+		foreach (GameState gameState in System.Enum.GetValues(typeof(GameState)))
 		{
 			if (GUILayout.Button(gameState.ToString()))
 			{
@@ -17,11 +18,16 @@ public class CheatMenuGameStatePage : CheatMenuPage
 				Close();
 			}
 		}
-		if (GUILayout.Button("Endless Loading Screen"))
+		GUILayout.Space(8.0f);
+		GUILayout.Label("Reboot To");
+		foreach (GeoDebugOptions.BootTo bootTo in System.Enum.GetValues(typeof(GeoDebugOptions.BootTo)))
 		{
-			//TODO implement an alternative 
-			//SplashScreenPlayer.ShowDebugRotation(LoadScreenType.Default);
-			throw new NotImplementedException();
+			if (GUILayout.Button(bootTo.ToString()))
+			{
+				GeoDebugOptions.BootToState.SetString(bootTo);
+				GameStateManager.RequestState(GameState.BootFlow);
+				Close();
+			}
 		}
 	}
 }

@@ -41,11 +41,18 @@ public class GeoDebugOptions : MonoBehaviour
 	//public static readonly DebugOption QualityDynamicBones = new DebugOption.Slider(Group.Quality, "Quality Dynamic Bones", 0, 120,
 	//	tooltip: "Set dynamic bones update rate. Requires hotfix.");
 
-	//public static readonly DebugOption SkipToBattle = new DebugOption.Toggle(Group.Boot, "Boot to Battle");
-	//public static readonly DebugOption SkipToSandbox = new DebugOption.Toggle(Group.Boot, "Boot to Sandbox");
+	public static readonly DebugOption BootToState = new DebugOption.Enum<BootTo>(Group.Boot, "Boot To State");
 	public static readonly DebugOption OpenCheatMenuOnBoot = new DebugOption.Toggle(Group.Boot, "Boot Open Cheat Menu", DebugOption.DefaultSetting.OnDevice);
 
 	public static readonly DebugOption BackgroundAppInEditor = new DebugOption.Toggle(DebugOption.Group.Editor, "Background App in Editor");
 
 	public static readonly DebugOption LogsFilter = new DebugOption.String(DebugOption.Group.Misc, "Logs Filter", DebugOption.DefaultSetting.Off); // TODO Move into cheatMenu itself
+	
+	public enum BootTo
+	{
+		Battle,
+		Sandbox,
+		CharacterTestScene,
+		EmptyScene,
+	}
 }

@@ -14,6 +14,7 @@ public enum GameState
 	Georama = 1 << 3,
 	Dungeon = 1 << 4,
 	Sandbox = 1 << 5,
+	Testing = 1 << 6,
 	InGame = Overworld | Georama | Dungeon | Sandbox,
 
 	All = 0x7FFFFFFF
@@ -60,7 +61,6 @@ public class GameStateManager : MonoBehaviour
 	public static GameStateTransition CurrentTransition => s_Singleton != null ? s_Singleton.m_Transition : null;
 	// Note: This needs to be true when OnTransitionStarted is called and false before OnTransitionFinished
 	public static bool IsStateChangeComplete() => s_Singleton != null && s_Singleton.m_Transition == null;
-	public static bool IsInternetRequired => s_Singleton != null && s_Singleton.m_Transition != null && s_Singleton.m_Transition.IsInternetRequired;
 
 	private LoadingPercent m_Progress = new LoadingPercent();
 	public static bool HasProgressToDisplay() => s_Singleton != null && s_Singleton.m_Progress.HasProgress();
@@ -68,11 +68,11 @@ public class GameStateManager : MonoBehaviour
 
 	private readonly Dictionary<GameState, GameStateTransition> m_Transitions = new Dictionary<GameState, GameStateTransition>()
 	{
-		//{ GameState.Login, new SuperLoginStateTransition(GameState.Login) },
+		{ GameState.BootFlow, new BootflowStateTransition(GameState.BootFlow) },
 		//{ GameState.Battle, new BattleStateTransition(GameState.Battle) },
 		//{ GameState.Sandbox, new SandboxStateTransition(GameState.Sandbox) },
 		//{ GameState.MainMenu, new MainMenuStateTransition(GameState.MainMenu) },
-		//{ GameState.Profiling, new ProfilingStateTransition(GameState.Profiling) },
+		{ GameState.Testing, new EmptyStateTransition(GameState.Testing) },
 		//{ GameState.AccountLink, new AccountLinkStateTransition(GameState.AccountLink) },
 	};
 

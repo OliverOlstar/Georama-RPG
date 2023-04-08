@@ -3,10 +3,9 @@ using UnityEngine;
 
 public class CheatMenuDebugOptionsPage : CheatMenuPage
 {
-	public override string Name => "Debug Options";
-	public override int Priority => CheatMenuPriority.DebugOptions;
-
-	// Debug options are available during boot flow
+	public override CheatMenuGroup Group => CheatMenuOkoGroups.DEBUG;
+	public override string Name => "Options";
+	public override int Priority => -1;
 	public override bool IsAvailable() => true;
 
 	private DebugOption m_ActiveTooltip = null;

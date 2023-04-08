@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_SCR/Game/Scenes/Empty.unity
     guid: 5b2a0c29fd0762745beabf873d6dbaf0
+  - enabled: 1
+    path: Assets/_SCR/Controller/CharacterTestScene.unity
+    guid: e2dc7b45f982e29408a38e4824b993a6
   m_configObjects: {}

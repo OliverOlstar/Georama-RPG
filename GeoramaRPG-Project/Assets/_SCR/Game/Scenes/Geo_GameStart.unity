@@ -150,6 +150,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 21.430174, y: 5.422148, z: 6.150227}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -167,4 +168,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CheatMenu: {fileID: 4904410241891333075, guid: a681adb50bdc7b54595504f01380996e, type: 3}
-  m_Managers: []
+  m_Managers:
+  - {fileID: 7722246515385224927, guid: 1048e713312f39c409333c31bc64ec1e, type: 3}
