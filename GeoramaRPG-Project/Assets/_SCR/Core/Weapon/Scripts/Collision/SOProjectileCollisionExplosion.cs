@@ -8,13 +8,13 @@ namespace OliverLoescher.Weapon
 	[CreateAssetMenu(menuName = "ScriptableObject/Weapon/Collision/Explosion")]
 	public class SOProjectileCollisionExplosion : SOProjectileCollisionBase
 	{
-		[Space, SerializeField, Min(0.1f)]
+		[Space, SerializeField, UnityEngine.Min(0.1f)]
 		private float explosionRadius = 5.0f;
-		[SerializeField, Min(0)]
+		[SerializeField, UnityEngine.Min(0)]
 		private int explosionDamage = 5;
-		[SerializeField, Min(0.0f)]
+		[SerializeField, UnityEngine.Min(0.0f)]
 		protected float explosionForce = 2000.0f;
-		[SerializeField, Min(0.0f)]
+		[SerializeField, UnityEngine.Min(0.0f)]
 		private float explosiveUpwardsModifier = 1;
 
 		public override bool DoCollision(Projectile pProjectile, Collider pOther, ref bool canDamage, ref bool activeSelf)

@@ -1,15 +1,15 @@
 fileFormatVersion: 2
 guid: 681e3188a212dde419aa20a926504fe4
 ModelImporter:
-  serializedVersion: 20200
+  serializedVersion: 21300
   internalIDToNameTable:
   - first:
       74: -203655887218126122
     second: Hard Landing
   externalObjects: {}
   materials:
-    materialImportMode: 2
-    materialName: 0
+    materialImportMode: 0
+    materialName: 1
     materialSearch: 1
     materialLocation: 1
   animations:
@@ -17,6 +17,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -67,7 +68,7 @@ ModelImporter:
   meshes:
     lODScreenPercentages: []
     globalScale: 1
-    meshCompression: 0
+    meshCompression: 1
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
@@ -75,6 +76,7 @@ ModelImporter:
     importBlendShapes: 1
     importCameras: 0
     importLights: 0
+    nodeNameCollisionStrategy: 0
     fileIdsGeneration: 2
     swapUVChannels: 0
     generateSecondaryUV: 0
@@ -86,6 +88,7 @@ ModelImporter:
     skinWeightsMode: 0
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
+    optimizeBones: 1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
@@ -716,6 +719,7 @@ ModelImporter:
   humanoidOversampling: 1
   avatarSetup: 2
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

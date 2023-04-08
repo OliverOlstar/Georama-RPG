@@ -70,9 +70,9 @@ public class CheatMenu : MonoBehaviour
 			m_PageList[i].OnInitialize();
 		}
 		m_InputBlocker.gameObject.SetActive(false);
-		if (string.IsNullOrEmpty(m_CurrentPageName.Get()))
+		if (string.IsNullOrEmpty(m_CurrentPageName.Value))
 		{
-			m_CurrentPageName.Set(m_PageList[0].Name);
+			m_CurrentPageName.Value = m_PageList[0].Name;
 		}
 	}
 
@@ -117,7 +117,7 @@ public class CheatMenu : MonoBehaviour
 				continue;
 			}
 			m_AvailablePageNames.Add(page.Name);
-			if (selectedindex < 0 && page.Name == m_CurrentPageName.Get())
+			if (selectedindex < 0 && page.Name == m_CurrentPageName.Value)
 			{
 				selectedindex = m_AvailablePageNames.Count - 1;
 			}
@@ -125,7 +125,7 @@ public class CheatMenu : MonoBehaviour
 		if (selectedindex < 0) // Page must have become unavailable
 		{
 			selectedindex = 0;
-			m_CurrentPageName.Set(m_AvailablePageNames[0]);
+			m_CurrentPageName.Value = m_AvailablePageNames[0];
 			CheatMenuPage page = m_PageDict[m_AvailablePageNames[0]];
 			page.OnBecameActive();
 			m_ScrollPosition = Vector3.zero;
@@ -146,7 +146,7 @@ public class CheatMenu : MonoBehaviour
 		GUI.enabled = true;
 		GUILayout.BeginVertical(GUI.skin.box);
 		m_ScrollPosition = GUILayout.BeginScrollView(m_ScrollPosition);
-		if (m_PageDict.TryGetValue(m_CurrentPageName.Get(), out CheatMenuPage currentPage))
+		if (m_PageDict.TryGetValue(m_CurrentPageName.Value, out CheatMenuPage currentPage))
 		{
 			currentPage.DrawGUI();
 			if (currentPage.CloseMenu)
@@ -208,7 +208,7 @@ public class CheatMenu : MonoBehaviour
 		{
 			string pageName = names[newSelection];
 			m_PageDict[pageName].OnBecameActive();
-			m_CurrentPageName.Set(pageName);
+			m_CurrentPageName.Value = pageName;
 			m_ScrollPosition = Vector3.zero;
 		}
 	}
@@ -225,7 +225,7 @@ public class CheatMenu : MonoBehaviour
 		if (newSelection != selectedIndex)
 		{
 			string newPageName = m_AvailablePageNames[newSelection];
-			m_CurrentPageName.Set(newPageName);
+			m_CurrentPageName.Value = newPageName;
 			CheatMenuPage page = m_PageDict[newPageName];
 			page.OnBecameActive();
 			m_ScrollPosition = Vector3.zero;
@@ -289,13 +289,13 @@ public class CheatMenu : MonoBehaviour
 		m_InputBlocker.gameObject.SetActive(true);
 		m_TimeScaleHandle = Core.TimeScaleManager.Exists() ? Core.TimeScaleManager.StartTimeEvent(0.0f) : Core.TimeScaleManager.INVALID_HANDLE;
 		m_NavButtonGroupIndex = -1;
-		if (!m_PageDict.TryGetValue(m_CurrentPageName.Get(), out CheatMenuPage page))
+		if (!m_PageDict.TryGetValue(m_CurrentPageName.Value, out CheatMenuPage page))
 		{
 			return;
 		}
 		if (!page.IsAvailable())
 		{
-			m_CurrentPageName.Set(string.Empty);
+			m_CurrentPageName.Value = string.Empty;
 			return;
 		}
 		page.OnBecameActive();
