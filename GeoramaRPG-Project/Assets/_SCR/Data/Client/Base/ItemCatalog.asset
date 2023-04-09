@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd03138e7c0920741bde05cedff0e579, type: 3}
+  m_Name: ItemCatalog
+  m_EditorClassIdentifier: 
+  m_RawData:
+  - rid: 3786899676286681095
+  references:
+    version: 2
+    RefIds:
+    - rid: 3786899676286681095
+      type: {class: ItemCatalogData, ns: , asm: Assembly-CSharp}
+      data:
+        m_ID: Gear
+        m_Database: {fileID: 11400000, guid: 58959ebbffa9ff948bc999c2c12486b6, type: 2}

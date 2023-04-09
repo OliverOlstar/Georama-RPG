@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CheatMenuDebugOptionsPage : CheatMenuPage
 {
-	public override CheatMenuGroup Group => CheatMenuOkoGroups.DEBUG;
+	public override CheatMenuGroup Group => GeoCheatMenuGroups.DEBUG;
 	public override string Name => "Options";
 	public override int Priority => -1;
 	public override bool IsAvailable() => true;

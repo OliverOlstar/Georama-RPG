@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2609addfe5989b4181da1756e0857ba, type: 3}
+  m_Name: _BaseDBMaster
+  m_EditorClassIdentifier: 
+  m_DataSOs:
+  - {fileID: 11400000, guid: 58959ebbffa9ff948bc999c2c12486b6, type: 2}
+  - {fileID: 11400000, guid: 21f208a7a59213549b191f1575788c43, type: 2}
+  m_Hashes:
+  - Hash: 00ffbf5d6ba20030dad98e34626cf19b0028aeabce5706f9b38c9fe4b816009b
+    TypeName: GearDB
+  - Hash: fa2e8d04ee78d0d90ed2c0798290916d2fcdf9f7c7a7010580a262a945ab0d51
+    TypeName: ItemCatalog

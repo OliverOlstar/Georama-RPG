@@ -19,13 +19,12 @@ public class CheatMenu : MonoBehaviour
 	public static float HalfWidth => Width * 0.5f;
 	public static float HalfHeight => Height * 0.5f;
 
-	private const float WIDTH = 315f;
-	private const float HEIGHT = (16.0f / 9.0f) * WIDTH;
-	private const float WIDTH_SCALE = 1.0f;
-	private const float HEIGHT_SCALE = 0.95f;
+	protected const float WIDTH = 315f;
+	protected const float HEIGHT = (16.0f / 9.0f) * WIDTH;
+	protected const float WIDTH_SCALE = 1.0f;
+	protected const float HEIGHT_SCALE = 0.95f;
 
 	private const int BUTTONS_PER_ROW = 3;
-	private const float MAX_BUTTON_WIDTH = 99.0f;
 	private const int SPACE_PRIORITY_THRESHOLD = 1000;
 	private const string CHEAT_MENU_GROUP_PREF = "CHEAT_MENU_GROUP";
 
@@ -48,7 +47,7 @@ public class CheatMenu : MonoBehaviour
 	private static CheatMenuGroup[] s_GroupArray = null;
 	private static Dictionary<string, CheatMenuGroup> s_GroupDict;
 	private int m_TimeScaleHandle = Core.TimeScaleManager.INVALID_HANDLE;
-	private readonly Rect m_BoxRect = new Rect(0f, 0f, WIDTH, HEIGHT);
+	private Rect m_BoxRect = new Rect(0f, 0f, WIDTH, HEIGHT);
 	private GUIStyle m_HeaderStyle = null;
 
 #pragma warning disable CS0414 // No referenced in RELEASE
@@ -59,6 +58,7 @@ public class CheatMenu : MonoBehaviour
 	protected virtual void OnAwake() { }
 	protected virtual void OnOpened() { }
 	protected virtual void OnClosed() { }
+	protected virtual void CalculateScreenRect(ref Rect rect) { }
 
 	void Awake()
 	{
@@ -122,8 +122,8 @@ public class CheatMenu : MonoBehaviour
 		{
 			return;
 		}
-		Matrix4x4 matrix = GUI.matrix;
-		GUI.matrix = CalculateMatrix();
+		// Matrix4x4 matrix = GUI.matrix;
+		// GUI.matrix = CalculateMatrix();
 
 		// Scale up buttons and text fields to make them more pressable on mobile devices
 		GUIStyle originalButton = GUI.skin.button;
@@ -142,9 +142,9 @@ public class CheatMenu : MonoBehaviour
 			m_HeaderStyle.fontStyle = FontStyle.Bold;
 		}
 
+		CalculateScreenRect(ref m_BoxRect);
 		GUI.Box(m_BoxRect, string.Empty); // Background
-		Rect rect = CalculateScreenRect();
-		using (GUIUtil.UsableArea.Use(rect))
+		using (GUIUtil.UsableArea.Use(m_BoxRect))
 		{
 			// Check current group
 			bool hasCurrentGroup = false;
@@ -172,7 +172,7 @@ public class CheatMenu : MonoBehaviour
 		}
 		GUI.skin.button = originalButton;
 		GUI.skin.textField = originalTextField;
-		GUI.matrix = matrix;
+		// GUI.matrix = matrix;
 	}
 
 	private void DrawGroupMenuButtons(CheatMenuGroup currentGroup)
@@ -231,7 +231,7 @@ public class CheatMenu : MonoBehaviour
 							column--;
 							continue;
 						}
-						if (GUILayout.Button(group.Name, GUILayout.Width(MAX_BUTTON_WIDTH)))
+						if (GUILayout.Button(group.Name, GUILayout.Width(m_BoxRect.width / BUTTONS_PER_ROW)))
 						{
 							m_CurrentGroupName.Value = group.Name;
 							group.OnBecameActive();
@@ -247,50 +247,6 @@ public class CheatMenu : MonoBehaviour
 			}
 			GUI.enabled = true;
 		}
-	}
-
-	private Matrix4x4 CalculateMatrix()
-	{
-		float width = WIDTH;
-		float height = HEIGHT;
-
-		if (Screen.width > Screen.height)
-		{
-			width = HEIGHT;
-			height = WIDTH;
-		}
-
-		return Matrix4x4.TRS
-		(
-			Vector3.zero,
-			Quaternion.identity,
-
-			new Vector3(Screen.width / width, Screen.height / height, 1.0f)
-		);
-	}
-
-	private Rect CalculateScreenRect()
-	{
-		float width = WIDTH;
-		float height = HEIGHT;
-		float widthScale = WIDTH_SCALE;
-		float heightScale = HEIGHT_SCALE;
-
-		if (Screen.width > Screen.height)
-		{
-			width = HEIGHT;
-			height = WIDTH;
-			widthScale = HEIGHT_SCALE;
-			heightScale = WIDTH_SCALE;
-		}
-
-		return new Rect
-		(
-			0.5f * (1.0f - widthScale) * width,
-			0.5f * (1.0f - heightScale) * height,
-			widthScale * width,
-			heightScale * height
-		);
 	}
 
 	private void OpenInternal()

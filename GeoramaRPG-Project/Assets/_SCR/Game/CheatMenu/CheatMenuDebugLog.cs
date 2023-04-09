@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CheatMenuDebugLog : CheatMenuPage
 {
-	public override CheatMenuGroup Group => CheatMenuOkoGroups.DEBUG;
+	public override CheatMenuGroup Group => GeoCheatMenuGroups.DEBUG;
 	public override string Name => "Logs";
 	public override bool IsAvailable() => true;
 

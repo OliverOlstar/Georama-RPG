@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CheatMenuGameStatePage : CheatMenuPage
 {
-	public override CheatMenuGroup Group => CheatMenuOkoGroups.GAME_STATE;
+	public override CheatMenuGroup Group => GeoCheatMenuGroups.GAME_STATE;
 	public override bool IsAvailable() => base.IsAvailable() || GameStateManager.GameState == GameState.Testing;
 
 	public override void DrawGUI()

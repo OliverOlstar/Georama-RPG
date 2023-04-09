@@ -24,265 +24,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     ""name"": ""PlayerInput"",
     ""maps"": [
         {
-            ""name"": ""SimpleCar"",
-            ""id"": ""613b71e8-d519-456e-981b-716cd641e0ea"",
-            ""actions"": [
-                {
-                    ""name"": ""Move"",
-                    ""type"": ""PassThrough"",
-                    ""id"": ""e7bf5bd3-35bb-4de7-9358-1bcc2ffa4efe"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Drift"",
-                    ""type"": ""Button"",
-                    ""id"": ""90190d30-277d-4528-8a4f-1ec89d0642f8"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": ""WASD"",
-                    ""id"": ""38c6c936-43b7-4432-94fa-16a8c87f5b91"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""f38b2134-f9ff-47ce-ab02-1431b57d6170"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""3dc98ece-3c76-4aff-bb3f-f05d3e82d6d8"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""0a7e099f-3a61-429c-ac23-2b9c0b13ec1b"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""06d3a484-e45e-4f38-887b-58b338ba6a16"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d3bb9a61-683e-46da-86e3-ee1575786454"",
-                    ""path"": ""<Gamepad>/leftStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""6ede6f66-af16-4d1d-8f5a-07fc8ce77c4a"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Drift"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""6896bc30-90da-4e68-95f2-b1b40eb56d6a"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Drift"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""Link"",
-            ""id"": ""bc355be7-5207-4369-bdfa-c9b14493fccb"",
-            ""actions"": [
-                {
-                    ""name"": ""Move"",
-                    ""type"": ""PassThrough"",
-                    ""id"": ""883e3417-553d-4bc5-8527-670178491f7e"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Crouch"",
-                    ""type"": ""Button"",
-                    ""id"": ""e24591cf-3d0b-4c14-8efb-183116035239"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Roll"",
-                    ""type"": ""Button"",
-                    ""id"": ""0cfe2365-b764-463a-bc79-3662ba4c5982"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""3d1dd41a-311a-4230-8964-990244fb44f8"",
-                    ""path"": ""<Gamepad>/leftStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""WASD"",
-                    ""id"": ""a8ae51cd-9a5d-436b-a953-da5d0dd576d6"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""310dd839-304a-4ce1-8da2-7b814e72245d"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""dbe514ac-d1c6-4e71-808f-9adbb2fe4401"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""9f8f4148-7740-4561-9e77-b852553128fe"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""bdf0a6f3-50de-4fc0-a913-f18c23af2b3c"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""35354cd7-a469-4b5e-8a39-3462a460756c"",
-                    ""path"": ""<Keyboard>/c"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Crouch"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""99799c37-b9dd-4ff1-927c-da08cb0d593e"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Crouch"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""3290aeef-6b49-4ff9-ad23-9ab5dd4fd021"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Roll"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""3b360bd6-1ab7-4574-8f78-342ebc28cd63"",
-                    ""path"": ""<Gamepad>/buttonEast"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Roll"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
             ""name"": ""FPS"",
             ""id"": ""0f7d2966-e324-44e4-9426-d200912c0f75"",
             ""actions"": [
@@ -535,120 +276,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Crouch"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""Simple2D"",
-            ""id"": ""05feaf8d-442f-425b-b909-c250f07e4b0d"",
-            ""actions"": [
-                {
-                    ""name"": ""Move"",
-                    ""type"": ""PassThrough"",
-                    ""id"": ""d7dedb0b-5bc1-4570-9c8f-6268da55e617"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Jump"",
-                    ""type"": ""Button"",
-                    ""id"": ""2f8c227a-26ce-4ec6-9c79-36244d45f50f"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""267f654d-8cf5-4250-8766-528658026fb7"",
-                    ""path"": ""<Gamepad>/leftStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""WASD"",
-                    ""id"": ""71128c83-089f-46e8-a1c8-fc147ed3b47c"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""e631dd95-ade6-4bfd-b4fb-c287e54b0911"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""e1c784ea-b94c-4a5f-993f-4ec7bdef59ed"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""a7ace4f1-19ab-4543-a8ef-9a0fe84a7852"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""4fc57d00-8a1c-4590-bb6b-a07bf8e911fa"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""18fc9b31-85d8-4a11-8968-a2e7cdddabe6"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Jump"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""dabaa6aa-d91b-41e5-8068-2eb65f4f430a"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1392,6 +1019,34 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Debug"",
+            ""id"": ""0b80d033-357d-413d-9fc4-af5eb9b62120"",
+            ""actions"": [
+                {
+                    ""name"": ""CheatMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""20f77c8a-ab3f-4a31-8bdf-6e77dd7fe6c7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""c5612a48-7c8c-4426-9d70-06b6b82f9b6c"",
+                    ""path"": ""<Keyboard>/backquote"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""CheatMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -1424,15 +1079,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         }
     ]
 }");
-        // SimpleCar
-        m_SimpleCar = asset.FindActionMap("SimpleCar", throwIfNotFound: true);
-        m_SimpleCar_Move = m_SimpleCar.FindAction("Move", throwIfNotFound: true);
-        m_SimpleCar_Drift = m_SimpleCar.FindAction("Drift", throwIfNotFound: true);
-        // Link
-        m_Link = asset.FindActionMap("Link", throwIfNotFound: true);
-        m_Link_Move = m_Link.FindAction("Move", throwIfNotFound: true);
-        m_Link_Crouch = m_Link.FindAction("Crouch", throwIfNotFound: true);
-        m_Link_Roll = m_Link.FindAction("Roll", throwIfNotFound: true);
         // FPS
         m_FPS = asset.FindActionMap("FPS", throwIfNotFound: true);
         m_FPS_CameraMove = m_FPS.FindAction("CameraMove", throwIfNotFound: true);
@@ -1442,10 +1088,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_FPS_Sprint = m_FPS.FindAction("Sprint", throwIfNotFound: true);
         m_FPS_Jump = m_FPS.FindAction("Jump", throwIfNotFound: true);
         m_FPS_Primary = m_FPS.FindAction("Primary", throwIfNotFound: true);
-        // Simple2D
-        m_Simple2D = asset.FindActionMap("Simple2D", throwIfNotFound: true);
-        m_Simple2D_Move = m_Simple2D.FindAction("Move", throwIfNotFound: true);
-        m_Simple2D_Jump = m_Simple2D.FindAction("Jump", throwIfNotFound: true);
         // Spectator Camera
         m_SpectatorCamera = asset.FindActionMap("Spectator Camera", throwIfNotFound: true);
         m_SpectatorCamera_Look = m_SpectatorCamera.FindAction("Look", throwIfNotFound: true);
@@ -1475,6 +1117,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Weapon = asset.FindActionMap("Weapon", throwIfNotFound: true);
         m_Weapon_Primary = m_Weapon.FindAction("Primary", throwIfNotFound: true);
         m_Weapon_Secondary = m_Weapon.FindAction("Secondary", throwIfNotFound: true);
+        // Debug
+        m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
+        m_Debug_CheatMenu = m_Debug.FindAction("CheatMenu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1532,122 +1177,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     {
         return asset.FindBinding(bindingMask, out action);
     }
-
-    // SimpleCar
-    private readonly InputActionMap m_SimpleCar;
-    private List<ISimpleCarActions> m_SimpleCarActionsCallbackInterfaces = new List<ISimpleCarActions>();
-    private readonly InputAction m_SimpleCar_Move;
-    private readonly InputAction m_SimpleCar_Drift;
-    public struct SimpleCarActions
-    {
-        private @PlayerInput m_Wrapper;
-        public SimpleCarActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Move => m_Wrapper.m_SimpleCar_Move;
-        public InputAction @Drift => m_Wrapper.m_SimpleCar_Drift;
-        public InputActionMap Get() { return m_Wrapper.m_SimpleCar; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(SimpleCarActions set) { return set.Get(); }
-        public void AddCallbacks(ISimpleCarActions instance)
-        {
-            if (instance == null || m_Wrapper.m_SimpleCarActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_SimpleCarActionsCallbackInterfaces.Add(instance);
-            @Move.started += instance.OnMove;
-            @Move.performed += instance.OnMove;
-            @Move.canceled += instance.OnMove;
-            @Drift.started += instance.OnDrift;
-            @Drift.performed += instance.OnDrift;
-            @Drift.canceled += instance.OnDrift;
-        }
-
-        private void UnregisterCallbacks(ISimpleCarActions instance)
-        {
-            @Move.started -= instance.OnMove;
-            @Move.performed -= instance.OnMove;
-            @Move.canceled -= instance.OnMove;
-            @Drift.started -= instance.OnDrift;
-            @Drift.performed -= instance.OnDrift;
-            @Drift.canceled -= instance.OnDrift;
-        }
-
-        public void RemoveCallbacks(ISimpleCarActions instance)
-        {
-            if (m_Wrapper.m_SimpleCarActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        public void SetCallbacks(ISimpleCarActions instance)
-        {
-            foreach (var item in m_Wrapper.m_SimpleCarActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_SimpleCarActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
-        }
-    }
-    public SimpleCarActions @SimpleCar => new SimpleCarActions(this);
-
-    // Link
-    private readonly InputActionMap m_Link;
-    private List<ILinkActions> m_LinkActionsCallbackInterfaces = new List<ILinkActions>();
-    private readonly InputAction m_Link_Move;
-    private readonly InputAction m_Link_Crouch;
-    private readonly InputAction m_Link_Roll;
-    public struct LinkActions
-    {
-        private @PlayerInput m_Wrapper;
-        public LinkActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Move => m_Wrapper.m_Link_Move;
-        public InputAction @Crouch => m_Wrapper.m_Link_Crouch;
-        public InputAction @Roll => m_Wrapper.m_Link_Roll;
-        public InputActionMap Get() { return m_Wrapper.m_Link; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(LinkActions set) { return set.Get(); }
-        public void AddCallbacks(ILinkActions instance)
-        {
-            if (instance == null || m_Wrapper.m_LinkActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_LinkActionsCallbackInterfaces.Add(instance);
-            @Move.started += instance.OnMove;
-            @Move.performed += instance.OnMove;
-            @Move.canceled += instance.OnMove;
-            @Crouch.started += instance.OnCrouch;
-            @Crouch.performed += instance.OnCrouch;
-            @Crouch.canceled += instance.OnCrouch;
-            @Roll.started += instance.OnRoll;
-            @Roll.performed += instance.OnRoll;
-            @Roll.canceled += instance.OnRoll;
-        }
-
-        private void UnregisterCallbacks(ILinkActions instance)
-        {
-            @Move.started -= instance.OnMove;
-            @Move.performed -= instance.OnMove;
-            @Move.canceled -= instance.OnMove;
-            @Crouch.started -= instance.OnCrouch;
-            @Crouch.performed -= instance.OnCrouch;
-            @Crouch.canceled -= instance.OnCrouch;
-            @Roll.started -= instance.OnRoll;
-            @Roll.performed -= instance.OnRoll;
-            @Roll.canceled -= instance.OnRoll;
-        }
-
-        public void RemoveCallbacks(ILinkActions instance)
-        {
-            if (m_Wrapper.m_LinkActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        public void SetCallbacks(ILinkActions instance)
-        {
-            foreach (var item in m_Wrapper.m_LinkActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_LinkActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
-        }
-    }
-    public LinkActions @Link => new LinkActions(this);
 
     // FPS
     private readonly InputActionMap m_FPS;
@@ -1742,60 +1271,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         }
     }
     public FPSActions @FPS => new FPSActions(this);
-
-    // Simple2D
-    private readonly InputActionMap m_Simple2D;
-    private List<ISimple2DActions> m_Simple2DActionsCallbackInterfaces = new List<ISimple2DActions>();
-    private readonly InputAction m_Simple2D_Move;
-    private readonly InputAction m_Simple2D_Jump;
-    public struct Simple2DActions
-    {
-        private @PlayerInput m_Wrapper;
-        public Simple2DActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Move => m_Wrapper.m_Simple2D_Move;
-        public InputAction @Jump => m_Wrapper.m_Simple2D_Jump;
-        public InputActionMap Get() { return m_Wrapper.m_Simple2D; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(Simple2DActions set) { return set.Get(); }
-        public void AddCallbacks(ISimple2DActions instance)
-        {
-            if (instance == null || m_Wrapper.m_Simple2DActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_Simple2DActionsCallbackInterfaces.Add(instance);
-            @Move.started += instance.OnMove;
-            @Move.performed += instance.OnMove;
-            @Move.canceled += instance.OnMove;
-            @Jump.started += instance.OnJump;
-            @Jump.performed += instance.OnJump;
-            @Jump.canceled += instance.OnJump;
-        }
-
-        private void UnregisterCallbacks(ISimple2DActions instance)
-        {
-            @Move.started -= instance.OnMove;
-            @Move.performed -= instance.OnMove;
-            @Move.canceled -= instance.OnMove;
-            @Jump.started -= instance.OnJump;
-            @Jump.performed -= instance.OnJump;
-            @Jump.canceled -= instance.OnJump;
-        }
-
-        public void RemoveCallbacks(ISimple2DActions instance)
-        {
-            if (m_Wrapper.m_Simple2DActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        public void SetCallbacks(ISimple2DActions instance)
-        {
-            foreach (var item in m_Wrapper.m_Simple2DActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_Simple2DActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
-        }
-    }
-    public Simple2DActions @Simple2D => new Simple2DActions(this);
 
     // Spectator Camera
     private readonly InputActionMap m_SpectatorCamera;
@@ -2138,6 +1613,52 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         }
     }
     public WeaponActions @Weapon => new WeaponActions(this);
+
+    // Debug
+    private readonly InputActionMap m_Debug;
+    private List<IDebugActions> m_DebugActionsCallbackInterfaces = new List<IDebugActions>();
+    private readonly InputAction m_Debug_CheatMenu;
+    public struct DebugActions
+    {
+        private @PlayerInput m_Wrapper;
+        public DebugActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @CheatMenu => m_Wrapper.m_Debug_CheatMenu;
+        public InputActionMap Get() { return m_Wrapper.m_Debug; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DebugActions set) { return set.Get(); }
+        public void AddCallbacks(IDebugActions instance)
+        {
+            if (instance == null || m_Wrapper.m_DebugActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_DebugActionsCallbackInterfaces.Add(instance);
+            @CheatMenu.started += instance.OnCheatMenu;
+            @CheatMenu.performed += instance.OnCheatMenu;
+            @CheatMenu.canceled += instance.OnCheatMenu;
+        }
+
+        private void UnregisterCallbacks(IDebugActions instance)
+        {
+            @CheatMenu.started -= instance.OnCheatMenu;
+            @CheatMenu.performed -= instance.OnCheatMenu;
+            @CheatMenu.canceled -= instance.OnCheatMenu;
+        }
+
+        public void RemoveCallbacks(IDebugActions instance)
+        {
+            if (m_Wrapper.m_DebugActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IDebugActions instance)
+        {
+            foreach (var item in m_Wrapper.m_DebugActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_DebugActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public DebugActions @Debug => new DebugActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -2156,17 +1677,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             return asset.controlSchemes[m_GamepadSchemeIndex];
         }
     }
-    public interface ISimpleCarActions
-    {
-        void OnMove(InputAction.CallbackContext context);
-        void OnDrift(InputAction.CallbackContext context);
-    }
-    public interface ILinkActions
-    {
-        void OnMove(InputAction.CallbackContext context);
-        void OnCrouch(InputAction.CallbackContext context);
-        void OnRoll(InputAction.CallbackContext context);
-    }
     public interface IFPSActions
     {
         void OnCameraMove(InputAction.CallbackContext context);
@@ -2176,11 +1686,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnSprint(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnPrimary(InputAction.CallbackContext context);
-    }
-    public interface ISimple2DActions
-    {
-        void OnMove(InputAction.CallbackContext context);
-        void OnJump(InputAction.CallbackContext context);
     }
     public interface ISpectatorCameraActions
     {
@@ -2215,5 +1720,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     {
         void OnPrimary(InputAction.CallbackContext context);
         void OnSecondary(InputAction.CallbackContext context);
+    }
+    public interface IDebugActions
+    {
+        void OnCheatMenu(InputAction.CallbackContext context);
     }
 }
