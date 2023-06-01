@@ -1,45 +1,45 @@
+using System;
 using OliverLoescher;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ModelMovementController : MonoBehaviour
+public class ModelMovementController : CharacterBehaviour
 {
 	public enum RotationTarget
 	{
-		Velocity,
-		Forward
+		Velocity = 0,
+		Target
 	}
 
+	[Header("Tilt"), SerializeField]
+	private float m_TiltScalar = 1.0f;
 	[SerializeField]
-	private CharacterValues values = null;
-	[SerializeField]
-	private MonoUtil.Updateable updateable = new MonoUtil.Updateable(MonoUtil.UpdateType.Default, MonoUtil.Priorities.ModelController);
+	private float m_TiltDampening = 5.0f;
 
-	[Header("Tilt")]
+	[Header("Rotation"), SerializeField]
+	private float m_RotationDampening = 5.0f;
 	[SerializeField]
-	private float tiltScalar = 1.0f;
-	[SerializeField]
-	private float tiltDampening = 5.0f;
+	private Transform m_Target;
 
-	[Header("Rotation")]
-	[SerializeField]
-	private RotationTarget rotationTarget = default;
-	[SerializeField]
-	private float rotationDampening = 5.0f;
+	private RotationTarget m_RotationTarget = RotationTarget.Velocity;
 
-	private void Start()
+	protected override void OnInitalize()
 	{
-		updateable.Register(Tick);
+		Character.MoveState.OnStateChangeEvent.AddListener(OnMoveStateChange);
+		Character.Input.LockOn.onChanged.AddListener(OnLockOnInput);
+		Character.GetBehaviour<CharacterInteractions>().OnTargetChanged.AddListener(OnTargetChanged);
 	}
 
-	private void OnDestroy()
+	protected override void OnDestroyed()
 	{
-		updateable.Deregister();
+		Character.MoveState.OnStateChangeEvent.RemoveListener(OnMoveStateChange);
+		Character.Input.LockOn.onChanged.RemoveListener(OnLockOnInput);
+		Character.GetBehaviour<CharacterInteractions>().OnTargetChanged.RemoveListener(OnTargetChanged);
 	}
 
-	private void Tick(float pDeltaTime)
+	protected override void Tick(float pDeltaTime)
 	{
 		DoTilt(pDeltaTime);
 		DoRotation(pDeltaTime);
@@ -47,29 +47,73 @@ public class ModelMovementController : MonoBehaviour
 
 	private void DoTilt(in float pDeltaTime)
 	{
-		if (tiltDampening <= 0.0f || values.InputMove == Vector3.zero)
+		if (m_TiltDampening <= 0.0f || Character.Input.Move.Input == Vector2.zero)
 		{
 			return;
 		}
 		Vector3 eularAngles = transform.localEulerAngles;
-		Quaternion toWorld = Quaternion.FromToRotation(Util.Horizontalize(transform.forward), values.Forward);
-		Vector3 move = toWorld * values.InputMoveHorizontal;
-		eularAngles.x = move.z * tiltScalar; // Forward
-		eularAngles.z = -move.x * tiltScalar; // Right
-		transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(eularAngles), tiltDampening * pDeltaTime);
+		Quaternion toWorld = Quaternion.FromToRotation(Util.Horizontalize(transform.forward), Character.Forward);
+		Vector3 move = toWorld * Character.Input.Move.InputHorizontal;
+		eularAngles.x = move.z * m_TiltScalar; // Forward
+		eularAngles.z = -move.x * m_TiltScalar; // Right
+		transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(eularAngles), m_TiltDampening * pDeltaTime);
 	}
 
 	private void DoRotation(in float pDeltaTime)
 	{
-		if (rotationDampening <= 0.0f)
+		if (m_RotationDampening <= 0.0f)
 		{
 			return;
 		}
-		Vector3 forward = rotationTarget == RotationTarget.Velocity ? Util.Horizontalize(values.Velocity, values.Up) : values.Forward;
+		Vector3 forward = GetForward();
 		if (forward.sqrMagnitude <= Util.NEARZERO)
 		{
 			return;
 		}
-		transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(forward), rotationDampening * pDeltaTime);
+		transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(forward), m_RotationDampening * pDeltaTime);
+	}
+
+	private Vector3 GetForward()
+	{
+		if (m_RotationTarget == RotationTarget.Target)
+		{
+			if (m_Target == null)
+			{
+				// No Target
+				return Character.Forward;
+			}
+			// Target
+			return Util.Horizontalize(m_Target.position - transform.position, Character.Up);
+		}
+		// RotationTarget.Velocity
+		return Util.Horizontalize(Character.Velocity, Character.Up);
+	}
+
+	private void UpdateState()
+	{
+		if (!Character.Input.LockOn.Input)
+		{
+			m_RotationTarget = RotationTarget.Velocity;
+			return;
+		}
+		if (Character.MoveState.IsState(CharacterMoveState.State.Strafe))
+		{
+			m_RotationTarget = RotationTarget.Target;
+			return;
+		}
+		if (Character.MoveState.IsState(CharacterMoveState.State.Airborne) && Character.Input.LockOn.Input)
+		{
+			m_RotationTarget = RotationTarget.Target;
+			return;
+		}
+		m_RotationTarget = RotationTarget.Velocity;
+	}
+
+	private void OnMoveStateChange(CharacterMoveState.State _) => UpdateState();
+	private void OnLockOnInput(bool _) => UpdateState();
+	private void OnTargetChanged(ITargetable target)
+	{
+		m_Target = target == null ? null : target.Transform;
+		UpdateState();
 	}
 }

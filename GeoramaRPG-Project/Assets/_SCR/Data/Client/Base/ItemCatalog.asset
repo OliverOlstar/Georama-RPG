@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: ItemCatalog
   m_EditorClassIdentifier: 
   m_RawData:
-  - rid: 3786899676286681095
+  - rid: 3786899676286681113
   references:
     version: 2
     RefIds:
-    - rid: 3786899676286681095
+    - rid: 3786899676286681113
       type: {class: ItemCatalogData, ns: , asm: Assembly-CSharp}
       data:
         m_ID: Gear

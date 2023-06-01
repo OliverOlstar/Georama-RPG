@@ -14,9 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_DataSOs:
   - {fileID: 11400000, guid: 58959ebbffa9ff948bc999c2c12486b6, type: 2}
+  - {fileID: 11400000, guid: 2bd88bcd41c57cd41bbdbecb4eaba256, type: 2}
   - {fileID: 11400000, guid: 21f208a7a59213549b191f1575788c43, type: 2}
   m_Hashes:
-  - Hash: 00ffbf5d6ba20030dad98e34626cf19b0028aeabce5706f9b38c9fe4b816009b
+  - Hash: 837b526a203355de09d5d4690f2f87483a03327b32aa583ce3009720ef5537e4
     TypeName: GearDB
-  - Hash: fa2e8d04ee78d0d90ed2c0798290916d2fcdf9f7c7a7010580a262a945ab0d51
+  - Hash: cf7c898c2a6bfd8ba37d3d284442209836ed7781d634d226edb7272621b1d87f
+    TypeName: InitialInventoryDB
+  - Hash: a70633c70ff0820af1028eac98d55b5e6aa1eff9fad20f3b5d6fe50be0baa7b6
     TypeName: ItemCatalog

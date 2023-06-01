@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class AccountInventoryState : DiskDirectorData
 {
@@ -14,46 +15,33 @@ public class AccountInventory : OkoAccountSubstate<PlayerAccount, AccountInvento
 	{
 		if (firstInit)
 		{
-			// AccountInitInventoryCollection initCollection = AccountInitInventoryDB.GetLatestVersion();
-			// Log("OnInitializeFromDisk", "Inventory is empty, initializing with data version " + initCollection.VersionNum);
+			InitialInventoryCollection initialCollection = InitialInventoryDB.GetCollection("Default");
+			Log("OnInitializeFromDisk", $"Inventory first initalize, initializing with set id of {initialCollection.CollectionID}");
 
-			// foreach (AccountInitInventoryData initData in initCollection)
-			// {
-			// 	if (m_State.Inventory.ContainsKey(initData.KeyData.ID))
-			// 	{
-			// 		m_State.Inventory[initData.KeyData.ID] += initData.Quantity;
-			// 	}
-			// 	else
-			// 	{
-			// 		m_State.Inventory.Add(initData.KeyData.ID, initData.Quantity);
-			// 	}
-			// }
-			// Dirty();
+			foreach (InitialInventoryData data in initialCollection)
+			{
+				if (m_State.Inventory.ContainsKey(data.ItemID))
+				{
+					m_State.Inventory[data.ItemID] += data.Quantity;
+				}
+				else
+				{
+					m_State.Inventory.Add(data.ItemID, data.Quantity);
+				}
+			}
+			Dirty();
 		}
 	}
 
-	// protected override void OnInitializeFromServer(LoginResponse login)
-	// {
-	// 	m_State.SetInventory(login);
-	// }
-
-	public bool TryGetKeyQuantity(string key, out int quantity)
-	{
-		return m_State.Inventory.TryGetValue(key, out quantity);
-	}
-
+	public bool TryGetKeyQuantity(string key, out int quantity) => m_State.Inventory.TryGetValue(key, out quantity);
 	public int GetKeyQuantity(string key)
 	{
 		m_State.Inventory.TryGetValue(key, out int quantity);
 		return quantity;
 	}
-
 	public bool HasKey(string key) => m_State.Inventory.TryGetValue(key, out int count) && count > 0;
 
-	public bool HasKeyQuantity(string key, int quantity)
-	{
-		return GetKeyQuantity(key) >= quantity;
-	}
+	public bool HasKeyQuantity(string key, int quantity) => GetKeyQuantity(key) >= quantity;
 
 	// public bool HasInventory(Inventory inventory)
 	// {

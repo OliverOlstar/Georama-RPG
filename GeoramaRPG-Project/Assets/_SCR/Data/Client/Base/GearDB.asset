@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: GearDB
   m_EditorClassIdentifier: 
   m_RawData:
-  - rid: 3786899676286681093
-  - rid: 3786899676286681094
+  - rid: 3786899676286681111
+  - rid: 3786899676286681112
   references:
     version: 2
     RefIds:
-    - rid: 3786899676286681093
+    - rid: 3786899676286681111
       type: {class: GearData, ns: , asm: Assembly-CSharp}
       data:
         m_ID: Test_1
-    - rid: 3786899676286681094
+    - rid: 3786899676286681112
       type: {class: GearData, ns: , asm: Assembly-CSharp}
       data:
         m_ID: Test_2

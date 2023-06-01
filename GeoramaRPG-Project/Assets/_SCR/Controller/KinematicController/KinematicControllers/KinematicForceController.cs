@@ -1,42 +1,59 @@
 using OliverLoescher;
-using Sirenix.OdinInspector;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
+using OliverLoescher.Input;
 using UnityEngine;
-using static OliverLoescher.MonoUtil;
+using UnityEngine.Events;
 
-public class KinematicForceController : KinematicController
+public class KinematicForceController : KinematicController, ICharacterBehaviour
 {
+	[System.Serializable]
+	public struct MoveValues
+	{
+		[Min(0.0f)]
+		public float ForwardAcceleration;
+		[Min(0.0f)]
+		public float SideAcceleration;
+		[Min(0.0f)]
+		public float Drag;
+	}
+
 	[Header("Force")]
-	[SerializeField]
-	private InputBridge_KinematicController input = null;
 	[SerializeField]
 	private Transform forwardTransform = null;
 	[SerializeField]
 	private MonoUtil.Updateable updateable = new MonoUtil.Updateable(MonoUtil.UpdateType.Fixed, MonoUtil.Priorities.CharacterController);
 
 	[Header("Move")]
-	[SerializeField, Min(0.0f)]
-	private float forwardAcceleration = 5.0f;
-	[SerializeField, Min(0.0f)]
-	private float sideAcceleration = 5.0f;
-	[SerializeField, Min(0.0f)]
-	private float drag = 5.0f;
-
-	[Header("Sprint")]
-	[SerializeField, Min(0.0f)]
-	private float sprintForwardAcceleration = 5.0f;
-	[SerializeField, Min(0.0f)]
-	private float sprintSideAcceleration = 5.0f;
+	[SerializeField]
+	private MoveValues m_RunValues = new MoveValues();
+	[SerializeField]
+	private MoveValues m_SprintValues = new MoveValues();
+	[SerializeField]
+	private MoveValues m_WalkValues = new MoveValues();
+	[SerializeField]
+	private MoveValues m_StrafeValues = new MoveValues();
+	[SerializeField]
+	private MoveValues m_CrouchValues = new MoveValues();
+	[SerializeField]
+	private MoveValues m_CrawlValues = new MoveValues();
+	[SerializeField]
+	private MoveValues m_AirborneValues = new MoveValues();
+	// [SerializeField]
+	// private MoveValues m_SwimValues = new MoveValues();
 
 	[Header("Jump")]
 	[SerializeField, Min(0.0f)]
-	private float jumpForce = 5.0f;
+	private float m_JumpForce = 5.0f;
+	[SerializeField, Min(0)]
+	private int m_AirJumpCount = 0;
 
-	private Vector3 velocity = Vector3.zero;
+	private Character m_Character = null;
+	private Vector3 m_Velocity = Vector3.zero;
+	private MoveValues m_Values;
+	private int m_RemainingJumps = 0;
 
-	public Vector3 Velocity => velocity;
+	public UnityEvent OnJumpEvent = new UnityEvent();
+
+	public Vector3 Velocity => m_Velocity;
 	public Vector3 Forward()
 	{
 		if (forwardTransform == null)
@@ -61,49 +78,85 @@ public class KinematicForceController : KinematicController
 		}
 		return Vector3.ProjectOnPlane(forwardTransform.right, Capsule.Up).normalized;
 	}
+	
+	float ICharacterBehaviour.Priority => 0;
 
-	public bool IsSprinting => input.Sprint.Input;
-	private float ForwardAcceleration => IsSprinting ? sprintForwardAcceleration : forwardAcceleration;
-	private float SideAcceleration => IsSprinting ? sprintSideAcceleration : sideAcceleration;
-
-	private void Start()
+	void ICharacterBehaviour.Initalize(Character pCharacter)
 	{
+		m_Character = pCharacter;
 		updateable.Register(Tick);
-		input.Jump.onPerformed.AddListener(DoJump);
+		m_Character.Input.Jump.onPerformed.AddListener(DoJump);
+		m_Character.MoveState.OnStateChangeEvent.AddListener(SetState);
 	}
 
 	private void OnDestroy()
 	{
 		updateable.Deregister();
-		input.Jump.onPerformed.RemoveListener(DoJump);
+		m_Character.Input.Jump.onPerformed.RemoveListener(DoJump);
+		m_Character.MoveState.OnStateChangeEvent.RemoveListener(SetState);
 	}
 
 	private void Tick(float pDeltaTime)
 	{
 		AddMove(pDeltaTime);
 
-		velocity -= velocity * drag * pDeltaTime;
-		velocity.y = 0.0f;
-		Move(velocity * pDeltaTime);
+		m_Velocity -= m_Velocity * m_Values.Drag * pDeltaTime;
+		m_Velocity.y = 0.0f;
+		Move(m_Velocity * pDeltaTime);
+
+		// TODO Move this to when isGrounded is set instead of here
+		if (isGrounded)
+		{
+			m_RemainingJumps = m_AirJumpCount;
+		}
 	}
 
 	private void AddMove(in float pDeltaTime)
 	{
-		if (input.Move.Input == Vector2.zero)
+		Vector2 input = m_Character.Input.Move.Input;
+		if (input == Vector2.zero)
 		{
 			return;
 		}
-
-		velocity += Forward() * input.Move.Input.y * pDeltaTime * ForwardAcceleration;
-		velocity += Right() * input.Move.Input.x * pDeltaTime * SideAcceleration;
+		m_Velocity += Forward() * input.y * pDeltaTime * m_Values.ForwardAcceleration;
+		m_Velocity += Right() * input.x * pDeltaTime * m_Values.SideAcceleration;
 	}
 
 	private void DoJump()
 	{
-		if (isGrounded)
+		if (isGrounded || m_RemainingJumps-- > 0)
 		{
-			verticalVelocity = jumpForce;
+			verticalVelocity = m_JumpForce;
 			isGrounded = false;
+			OnJumpEvent.Invoke();
+		}
+	}
+
+	public void SetState(CharacterMoveState.State pState)
+	{
+		m_Values = GetValues(pState);
+	}
+
+	private MoveValues GetValues(CharacterMoveState.State pState)
+	{
+		switch (pState)
+		{
+			case CharacterMoveState.State.Run:
+				return m_RunValues;
+			case CharacterMoveState.State.Sprint:
+				return m_SprintValues;
+			case CharacterMoveState.State.Walk:
+				return m_WalkValues;
+			case CharacterMoveState.State.Strafe:
+				return m_StrafeValues;
+			case CharacterMoveState.State.Crouch:
+				return m_CrouchValues;
+			case CharacterMoveState.State.Crawl:
+				return m_CrawlValues;
+			case CharacterMoveState.State.Airborne:
+				return m_AirborneValues;
+			default:
+				throw new System.NotImplementedException($"CharacterMoveState.MoveState.{System.Enum.GetName(typeof(CharacterMoveState.State), pState)} does not have any move values set");
 		}
 	}
 }

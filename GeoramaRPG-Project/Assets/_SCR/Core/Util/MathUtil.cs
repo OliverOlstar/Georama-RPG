@@ -66,6 +66,7 @@ namespace OliverLoescher
 		public static Quaternion Add(this Quaternion start, Quaternion diff) => diff * start;
 
 		#region Compare
+		// TODO Add Epsilon for floating point errors
 		public static bool DistanceEqual(Vector3 pA, Vector3 pB, float pDistance) => (pA - pB).sqrMagnitude == Mathf.Pow(pDistance, 2);
 		public static bool DistanceGreaterThan(Vector3 pA, Vector3 pB, float pDistance) => (pA - pB).sqrMagnitude > Mathf.Pow(pDistance, 2);
 		public static bool DistanceEqualGreaterThan(Vector3 pA, Vector3 pB, float pDistance) => (pA - pB).sqrMagnitude >= Mathf.Pow(pDistance, 2);

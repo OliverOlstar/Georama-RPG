@@ -60,19 +60,32 @@ namespace OliverLoescher
             currZoom = childOffset.magnitude;
             cameraTransform.localPosition = childOffset;
 
-            if (input != null)
-			{
-				input.Look.onChanged.AddListener(OnLook);
-				input.LookDelta.onChanged.AddListener(OnLookDelta);
-				input.Zoom.onChanged.AddListener(OnZoom);
-			}
-
 			updateable.Register(Tick);
 		}
 
 		private void OnDestroy()
 		{
 			updateable.Deregister();
+		}
+
+		private void OnEnable()
+		{
+            if (input != null)
+			{
+				input.Look.onChanged.AddListener(OnLook);
+				input.LookDelta.onChanged.AddListener(OnLookDelta);
+				input.Zoom.onChanged.AddListener(OnZoom);
+			}
+		}
+
+		private void OnDisable()
+		{
+            if (input != null)
+			{
+				input.Look.onChanged.RemoveListener(OnLook);
+				input.LookDelta.onChanged.RemoveListener(OnLookDelta);
+				input.Zoom.onChanged.RemoveListener(OnZoom);
+			}
 		}
 
 		private void Tick(float pDeltaTime) 

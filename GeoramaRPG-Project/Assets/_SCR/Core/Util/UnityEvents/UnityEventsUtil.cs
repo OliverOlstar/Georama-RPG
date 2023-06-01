@@ -7,6 +7,9 @@ namespace OliverLoescher
 {
 	public static class UnityEventsUtil
 	{
+		[System.Serializable]
+		public class Event<T> : UnityEvent<T> { }
+
 		[System.Serializable] 
 		public class TransformEvent : UnityEvent<Transform> { }
 
