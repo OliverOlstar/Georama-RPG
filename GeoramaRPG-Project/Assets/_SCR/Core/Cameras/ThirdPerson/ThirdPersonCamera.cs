@@ -19,6 +19,8 @@ namespace OliverLoescher
         public Transform cameraTransform = null; // Should be child
         [SerializeField]
 		private Vector3 childOffset = new Vector3(0.0f, 2.0f, -5.0f);
+		[SerializeField, Min(0.0f)]
+		private float m_FollowYDampening = 5.0f;
         
         [Header("Look")]
         [SerializeField]
@@ -55,7 +57,7 @@ namespace OliverLoescher
 
 		private void Start() 
         {
-            DoFollow();
+            DoFollow(0.0f, 0.0f);
 
             currZoom = childOffset.magnitude;
             cameraTransform.localPosition = childOffset;
@@ -90,7 +92,7 @@ namespace OliverLoescher
 
 		private void Tick(float pDeltaTime) 
         {
-            DoFollow();
+            DoFollow(pDeltaTime, m_FollowYDampening);
             
             if (lookInput != Vector2.zero)
             {
@@ -101,12 +103,18 @@ namespace OliverLoescher
             DoCollision();
         }
 
-        private void DoFollow()
+        private void DoFollow(in float pDeltaTime, in float pYDampening)
         {
-            if (followTransform != null)
+            if (followTransform == null)
             {
-                transform.position = followTransform.position + offset;
+				return;
             }
+			Vector3 position = followTransform.position + offset;
+			if (pYDampening > 0.0f)
+			{
+				position.y = Mathf.Lerp(transform.position.y, position.y, pYDampening * pDeltaTime);
+			}
+			transform.position = position;
         }
 
         private void RotateCamera(Vector2 pInput)
@@ -164,7 +172,7 @@ namespace OliverLoescher
             {
                 if (cameraTransform == null)
                     return;
-                DoFollow();
+                DoFollow(0.0f, 0.0f);
                 cameraTransform.localPosition = childOffset;
             }
         }

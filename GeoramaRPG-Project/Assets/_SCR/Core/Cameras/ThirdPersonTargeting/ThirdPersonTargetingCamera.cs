@@ -20,6 +20,8 @@ namespace OliverLoescher
         public Transform cameraTransform = null; // Should be child
         [SerializeField]
 		private Vector3 childOffset = new Vector3(0.0f, 2.0f, -5.0f);
+		[SerializeField, Min(0.0f)]
+		private float m_FollowYDampening = 5.0f;
         
         [Header("Look")]
         [SerializeField]
@@ -106,6 +108,10 @@ namespace OliverLoescher
 			}
 
 			Vector3 targetPos = Vector3.Lerp(target.position, followTransform.position, m_Lerp);
+			if (m_FollowYDampening > 0.0f)
+			{
+				targetPos.y = Mathf.Lerp(transform.position.y, targetPos.y, m_FollowYDampening * pDeltaTime);
+			}
             transform.position = targetPos + offset;
 			
 			Vector3 direction = (m_Lerp > 0.5f ? target.position : followTransform.position) - targetPos;

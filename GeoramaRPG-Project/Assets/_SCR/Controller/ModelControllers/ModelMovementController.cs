@@ -10,7 +10,8 @@ public class ModelMovementController : CharacterBehaviour
 	public enum RotationTarget
 	{
 		Velocity = 0,
-		Target
+		Target,
+		None,
 	}
 
 	[Header("Tilt"), SerializeField]
@@ -28,14 +29,12 @@ public class ModelMovementController : CharacterBehaviour
 	protected override void OnInitalize()
 	{
 		Character.MoveState.OnStateChangeEvent.AddListener(OnMoveStateChange);
-		Character.Input.LockOn.onChanged.AddListener(OnLockOnInput);
 		Character.GetBehaviour<CharacterInteractions>().OnTargetChanged.AddListener(OnTargetChanged);
 	}
 
 	protected override void OnDestroyed()
 	{
 		Character.MoveState.OnStateChangeEvent.RemoveListener(OnMoveStateChange);
-		Character.Input.LockOn.onChanged.RemoveListener(OnLockOnInput);
 		Character.GetBehaviour<CharacterInteractions>().OnTargetChanged.RemoveListener(OnTargetChanged);
 	}
 
@@ -61,10 +60,6 @@ public class ModelMovementController : CharacterBehaviour
 
 	private void DoRotation(in float pDeltaTime)
 	{
-		if (m_RotationDampening <= 0.0f)
-		{
-			return;
-		}
 		Vector3 forward = GetForward();
 		if (forward.sqrMagnitude <= Util.NEARZERO)
 		{
@@ -75,45 +70,43 @@ public class ModelMovementController : CharacterBehaviour
 
 	private Vector3 GetForward()
 	{
-		if (m_RotationTarget == RotationTarget.Target)
+		switch (m_RotationTarget)
 		{
-			if (m_Target == null)
-			{
-				// No Target
-				return Character.Controller.Forward;
-			}
-			// Target
-			return Util.Horizontalize(m_Target.position - transform.position, Character.Controller.Up);
+			case RotationTarget.None:
+				return Util.Horizontal(transform.forward);
+
+			case RotationTarget.Target:
+				if (m_Target == null)
+				{
+					// No Target
+					return Character.Controller.Forward;
+				}
+				// Target
+				return Util.Horizontalize(m_Target.position - transform.position, Character.Controller.Up);
+
+			case RotationTarget.Velocity:
+				return Util.Horizontalize(Character.Controller.Velocity, Character.Controller.Up);
 		}
-		// RotationTarget.Velocity
-		return Util.Horizontalize(Character.Controller.Velocity, Character.Controller.Up);
+		Core.DebugUtil.DevException(new NotImplementedException());
+		return Vector3.forward;
 	}
 
-	private void UpdateState()
+	private void OnMoveStateChange(CharacterMoveState.State pState)
 	{
-		if (!Character.Input.LockOn.Input)
+		switch (pState)
 		{
-			m_RotationTarget = RotationTarget.Velocity;
-			return;
-		}
-		if (Character.MoveState.IsState(CharacterMoveState.State.Strafe))
-		{
-			m_RotationTarget = RotationTarget.Target;
-			return;
-		}
-		if (Character.MoveState.IsState(CharacterMoveState.State.Airborne) && Character.Input.LockOn.Input)
-		{
-			m_RotationTarget = RotationTarget.Target;
-			return;
+			case CharacterMoveState.State.Strafe:
+				m_RotationTarget = RotationTarget.Target;
+				return;
+			case CharacterMoveState.State.Airborne:
+				m_RotationTarget = RotationTarget.None;
+				return;
 		}
 		m_RotationTarget = RotationTarget.Velocity;
 	}
 
-	private void OnMoveStateChange(CharacterMoveState.State _) => UpdateState();
-	private void OnLockOnInput(bool _) => UpdateState();
 	private void OnTargetChanged(ITargetable target)
 	{
 		m_Target = target == null ? null : target.Transform;
-		UpdateState();
 	}
 }
