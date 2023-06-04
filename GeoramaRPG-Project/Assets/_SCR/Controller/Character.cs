@@ -11,12 +11,12 @@ public class Character : MonoBehaviour
 
 	private CharacterMoveState m_MoveState;
 	private CharacterOnGround m_OnGround;
-	private KinematicForceController m_Controller;
+	private CharacterMoveController m_Controller;
 
 	public InputBridge_KinematicController Input => m_Input;
 	public CharacterMoveState MoveState => m_MoveState;
 	public CharacterOnGround OnGround => m_OnGround;
-	public KinematicForceController Controller => m_Controller;
+	public CharacterMoveController Controller => m_Controller;
 
 	private void Awake()
 	{
@@ -26,9 +26,9 @@ public class Character : MonoBehaviour
 		{
 			m_Behaviours.Add(behaviour.GetType(), behaviour);
 		}
-		TryGetBehaviourRequired(out m_MoveState);
-		TryGetBehaviourRequired(out m_OnGround);
-		TryGetBehaviourRequired(out m_Controller);
+		GetBehaviour(out m_MoveState);
+		GetBehaviour(out m_OnGround);
+		GetBehaviour(out m_Controller);
 		foreach (ICharacterBehaviour behaviour in behaviours)
 		{
 			behaviour.Initalize(this);
@@ -56,13 +56,11 @@ public class Character : MonoBehaviour
 		return default(T);
 	}
 
-	public bool TryGetBehaviourRequired<T>(out T pBehaviour) where T : ICharacterBehaviour
+	public void GetBehaviour<T>(out T pBehaviour) where T : ICharacterBehaviour
 	{
 		if (!TryGetBehaviour(out pBehaviour))
 		{
 			Core.DebugUtil.DevException($"Could not find required character behaviour {typeof(T).Name}");
-			return false;
 		}
-		return true;
 	}
 }

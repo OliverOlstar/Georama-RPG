@@ -3,8 +3,8 @@ using UnityEngine;
 using UnityEngine.Events;
 using Sirenix.OdinInspector;
 
-[RequireComponent(typeof(Rigidbody))]
-public class KinematicForceController : CharacterBehaviour
+[System.Serializable]
+public class CharacterMoveForceController
 {
 	[System.Serializable]
 	public struct MoveValues
@@ -46,63 +46,28 @@ public class KinematicForceController : CharacterBehaviour
 	[SerializeField, Min(0.0f)]
 	private float m_Gravity = 9.81f;
 
-	[FoldoutGroup("Events"), SerializeField]
-	private UnityEvent m_OnJumpEvent = new UnityEvent();
-
-	private Rigidbody m_Capsule = null;
-	private CharacterOnGround m_OnGround = null;
+	private Character m_Character;
+	private Rigidbody m_Rigidbody;
 	private Vector3 m_Velocity = Vector3.zero;
 	protected float m_VerticalVelocity = 0.0f;
 	private MoveValues m_Values;
 	private int m_RemainingJumps = 0;
 
-	public UnityEvent OnJumpEvent => m_OnJumpEvent;
 	public Vector3 Velocity => m_Velocity;
 	public Vector3 Up => Vector3.up;
 
-	public Vector3 Forward
-	{
-		get
-		{
-			if (m_ForwardTransform == null)
-			{
-				return Vector3.forward;
-			}
-			return Vector3.ProjectOnPlane(m_ForwardTransform.forward, Up).normalized;
-		}
-	}
-	public Vector3 Right
-	{
-		get
-		{
-			if (m_ForwardTransform == null)
-			{
-				return Vector3.right;
-			}
-			return Vector3.ProjectOnPlane(m_ForwardTransform.right, Up).normalized;
-		}
-	}
+	public Vector3 Forward() => Vector3.ProjectOnPlane(m_ForwardTransform.forward, Up).normalized;
+	public Vector3 Right() => Vector3.ProjectOnPlane(m_ForwardTransform.right, Up).normalized;
 
-	protected override void OnInitalize()
+	public void Initalize(Character pCharacter, Rigidbody pRigidbody)
 	{
-		m_Capsule = GetComponent<Rigidbody>();
-		Character.TryGetBehaviourRequired(out m_OnGround);
-
-		m_OnGround.OnStateChanged.AddListener(OnGroundStateChange);
-		Character.Input.Jump.onPerformed.AddListener(DoJump);
-		Character.MoveState.OnStateChangeEvent.AddListener(SetState);
-	}
-
-	private void OnDestroy()
-	{
-		m_OnGround.OnStateChanged.RemoveListener(OnGroundStateChange);
-		Character.Input.Jump.onPerformed.RemoveListener(DoJump);
-		Character.MoveState.OnStateChangeEvent.RemoveListener(SetState);
+		m_Character = pCharacter;
+		m_Rigidbody = pRigidbody;
 	}
 
 	public void Move(Vector3 pMove)
 	{
-		m_Capsule.MovePosition(m_Capsule.position + pMove);
+		m_Rigidbody.MovePosition(m_Rigidbody.position + pMove);
 	}
 
 	public void AddVelocity(Vector3 pVelocity)
@@ -112,30 +77,29 @@ public class KinematicForceController : CharacterBehaviour
 		m_Velocity.z += pVelocity.z;
 	}
 
-	protected override void Tick(float pDeltaTime)
+	public void Tick(float pDeltaTime, Vector2 pInput)
 	{
 		DoGravity(pDeltaTime);
-		AddMove(pDeltaTime);
+		AddMove(pDeltaTime, pInput);
 		m_Velocity -= m_Velocity * m_Values.Drag * pDeltaTime;
 
 		Vector3 vel = RotateMoveDirection(m_Velocity) + (CalculateGravityDirection() * m_VerticalVelocity);
-		m_Capsule.velocity = vel;
+		m_Rigidbody.velocity = vel;
 	}
 
-	private void AddMove(in float pDeltaTime)
+	private void AddMove(in float pDeltaTime, in Vector2 pInput)
 	{
-		Vector2 input = Character.Input.Move.Input;
-		if (input == Vector2.zero)
+		if (pInput == Vector2.zero)
 		{
 			return;
 		}
-		m_Velocity += Forward * input.y * pDeltaTime * m_Values.ForwardAcceleration;
-		m_Velocity += Right * input.x * pDeltaTime * m_Values.SideAcceleration;
+		m_Velocity += Forward() * pInput.y * pDeltaTime * m_Values.ForwardAcceleration;
+		m_Velocity += Right() * pInput.x * pDeltaTime * m_Values.SideAcceleration;
 	}
 
 	private void DoGravity(float pDeltaTime)
 	{
-		switch (m_OnGround.GroundedState)
+		switch (m_Character.OnGround.GroundedState)
 		{
 			case CharacterOnGround.State.Grounded:
 				m_VerticalVelocity = Mathf.Max(m_VerticalVelocity, 0.0f);
@@ -151,35 +115,36 @@ public class KinematicForceController : CharacterBehaviour
 		}
 	}
 
-	private void DoJump()
+	public bool TryDoJump()
 	{
-		if (m_OnGround.IsGrounded || m_RemainingJumps-- > 0)
+		if (m_Character.OnGround.IsGrounded || m_RemainingJumps-- > 0)
 		{
 			m_VerticalVelocity = m_JumpForce;
-			m_OnJumpEvent.Invoke();
+			return true;
 		}
+		return false;
 	}
 
 	private Vector3 CalculateGravityDirection()
 	{
-		if (!m_OnGround.IsSliding)
+		if (!m_Character.OnGround.IsSliding)
 		{
 			return Vector3.up;
 		}
-		return Vector3.ProjectOnPlane(Vector3.up, m_OnGround.GetAverageNormal()).normalized;
+		return Vector3.ProjectOnPlane(Vector3.up, m_Character.OnGround.GetAverageNormal()).normalized;
 	}
 
 	private Vector3 RotateMoveDirection(in Vector3 pVelocity)
 	{
-		if (!m_OnGround.IsGrounded)
+		if (!m_Character.OnGround.IsGrounded)
 		{
 			return pVelocity;
 		}
 		float magnitude = pVelocity.magnitude;
-		return Vector3.ProjectOnPlane(pVelocity, m_OnGround.GetAverageNormal()).normalized * magnitude;
+		return Vector3.ProjectOnPlane(pVelocity, m_Character.OnGround.GetAverageNormal()).normalized * magnitude;
 	}
 
-	private void OnGroundStateChange(CharacterOnGround.State pState)
+	public void OnGroundStateChange(CharacterOnGround.State pState)
 	{
 		if (pState == CharacterOnGround.State.Grounded)
 		{
