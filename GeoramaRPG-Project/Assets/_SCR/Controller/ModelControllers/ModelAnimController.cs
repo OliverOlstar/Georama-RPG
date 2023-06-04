@@ -13,6 +13,7 @@ public class ModelAnimController : CharacterBehaviour
 	private const string KEY_RIGHT_ATTACK = "R1";
 	private const string KEY_LEFT_ATTACK = "L1";
 	private const string KEY_MOVE_STATE = "Move_State";
+	private const string KEY_CROUCH_BLEND = "Crouch_Blend";
 
 	[SerializeField]
 	private Transform m_ModelForward = null;
@@ -20,6 +21,9 @@ public class ModelAnimController : CharacterBehaviour
 	private float m_MoveScalar = 0.08f;
 	[SerializeField]
 	private float m_MoveDampening = 1.0f;
+
+	[SerializeField]
+	private AnimatedValueInOut m_CrouchTransition = new AnimatedValueInOut();
 
 	private Animator m_Animator = null;
 
@@ -78,11 +82,12 @@ public class ModelAnimController : CharacterBehaviour
 
 	private void SetMoveState(CharacterMoveState.State pState)
 	{
+		m_CrouchTransition.StartOut(SetCrouchBlend);
 		switch (pState)
 		{
 			case CharacterMoveState.State.Crouch:
-				m_Animator.SetInteger(KEY_MOVE_STATE, 1);
-				return;
+				m_CrouchTransition.StartIn(SetCrouchBlend);
+				break;
 			case CharacterMoveState.State.Crawl:
 				m_Animator.SetInteger(KEY_MOVE_STATE, 2);
 				return;
@@ -91,6 +96,11 @@ public class ModelAnimController : CharacterBehaviour
 				return;
 		}
 		m_Animator.SetInteger(KEY_MOVE_STATE, 0);
+	}
+
+	private void SetCrouchBlend(float pValue)
+	{
+		m_Animator.SetFloat(KEY_CROUCH_BLEND, pValue);
 	}
 
 	private void FootR() {} // SUPRESS ANIM EVENTS

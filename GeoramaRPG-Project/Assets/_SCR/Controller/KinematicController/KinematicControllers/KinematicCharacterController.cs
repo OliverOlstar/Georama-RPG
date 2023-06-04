@@ -9,7 +9,7 @@ using UnityEngine.ProBuilder;
 public class KinematicCharacterController : MonoBehaviour
 {
 	[SerializeField]
-	private MonoUtil.Updateable updateable = new MonoUtil.Updateable(MonoUtil.UpdateType.Fixed, MonoUtil.Priorities.CharacterController);
+	private Updateable updateable = new Updateable(MonoUtil.UpdateType.Fixed, MonoUtil.Priorities.CharacterController);
 
 	[Header("References")]
 	[SerializeField]

@@ -20,7 +20,7 @@ public class KinematicForceController : KinematicController, ICharacterBehaviour
 	[SerializeField]
 	private Transform forwardTransform = null;
 	[SerializeField]
-	private MonoUtil.Updateable updateable = new MonoUtil.Updateable(MonoUtil.UpdateType.Fixed, MonoUtil.Priorities.CharacterController);
+	private Updateable updateable = new Updateable(MonoUtil.UpdateType.Fixed, MonoUtil.Priorities.CharacterController);
 
 	[Header("Move")]
 	[SerializeField]

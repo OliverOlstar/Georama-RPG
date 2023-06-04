@@ -12,7 +12,7 @@ public interface ICharacterBehaviour
 public abstract class CharacterBehaviour : MonoBehaviour, ICharacterBehaviour
 {
 	[SerializeField]
-	private MonoUtil.Updateable updateable = new MonoUtil.Updateable(MonoUtil.UpdateType.Default, MonoUtil.Priorities.Default);
+	private Updateable updateable = new Updateable(MonoUtil.UpdateType.Default, MonoUtil.Priorities.Default);
 
 	private Character m_Character;
 	public Character Character => m_Character;

@@ -10,7 +10,7 @@ namespace OliverLoescher.Camera
 		[SerializeField]
 		private InputBridge_EagleEye input = null;
 		[SerializeField, DisableInPlayMode]
-		private MonoUtil.Updateable updateable = new MonoUtil.Updateable(MonoUtil.UpdateType.Late, MonoUtil.Priorities.Camera);
+		private Updateable updateable = new Updateable(MonoUtil.UpdateType.Late, MonoUtil.Priorities.Camera);
 
 		[Header("Follow")]
 		public Transform cameraTransform = null; // Should be child
