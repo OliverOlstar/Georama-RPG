@@ -6,15 +6,17 @@ public class Character : MonoBehaviour
 {
 	private Dictionary<System.Type, ICharacterBehaviour> m_Behaviours = new Dictionary<System.Type, ICharacterBehaviour>();
 
-	private KinematicForceController m_Controller = null;
 	[SerializeField]
 	private InputBridge_KinematicController m_Input = null;
-	private CharacterMoveState m_MoveState;
 
-	public KinematicForceController Controller => m_Controller;
+	private CharacterMoveState m_MoveState;
+	private CharacterOnGround m_OnGround;
+	private KinematicForceController m_Controller;
 
 	public InputBridge_KinematicController Input => m_Input;
 	public CharacterMoveState MoveState => m_MoveState;
+	public CharacterOnGround OnGround => m_OnGround;
+	public KinematicForceController Controller => m_Controller;
 
 	private void Awake()
 	{
@@ -25,6 +27,7 @@ public class Character : MonoBehaviour
 			m_Behaviours.Add(behaviour.GetType(), behaviour);
 		}
 		TryGetBehaviourRequired(out m_MoveState);
+		TryGetBehaviourRequired(out m_OnGround);
 		TryGetBehaviourRequired(out m_Controller);
 		foreach (ICharacterBehaviour behaviour in behaviours)
 		{
@@ -49,6 +52,7 @@ public class Character : MonoBehaviour
 		{
 			return tBehaviour;
 		}
+		Core.DebugUtil.DevException($"Could not find character behaviour {typeof(T).Name}");
 		return default(T);
 	}
 

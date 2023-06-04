@@ -15,7 +15,8 @@ public class CharacterMoveState : CharacterBehaviour
 		Crouch = 1 << 5,
 		Crawl = 1 << 6,
 		Airborne = 1 << 7,
-		Swim = 1 << 8,
+		Sliding = 1 << 8,
+		Swim = 1 << 9,
 	}
 
 	private State m_State = State.Run;
@@ -35,6 +36,7 @@ public class CharacterMoveState : CharacterBehaviour
 		Character.Input.Crouch.onCanceled.AddListener(OnCrouchCanceled);
 		Character.Input.LockOn.onPerformed.AddListener(OnLockOnPreformed);
 		Character.Input.LockOn.onCanceled.AddListener(OnLockOnCanceled);
+		Character.OnGround.OnStateChanged.AddListener(OnGroundedChanged);
 
 		OnStateChangeEvent.Invoke(m_State); // Inital State
 	}
@@ -47,18 +49,12 @@ public class CharacterMoveState : CharacterBehaviour
 		Character.Input.Crouch.onCanceled.RemoveListener(OnCrouchCanceled);
 		Character.Input.LockOn.onPerformed.RemoveListener(OnLockOnPreformed);
 		Character.Input.LockOn.onCanceled.RemoveListener(OnLockOnCanceled);
+		Character.OnGround.OnStateChanged.RemoveListener(OnGroundedChanged);
 	}
 
-	private bool m_IsGrounded = true;
 	private bool m_IsSprinting = true;
 	protected override void Tick(float pDeltaTime)
 	{
-		if (Character.Controller.IsGrounded != m_IsGrounded)
-		{
-			m_IsGrounded = Character.Controller.IsGrounded;
-			OnGroundedChanged(m_IsGrounded);
-		}
-
 		bool isSprinting = Character.Input.Sprint.Input && Character.Input.Move.Input != Vector2.zero;
 		if (m_IsSprinting != isSprinting)
 		{
@@ -67,15 +63,19 @@ public class CharacterMoveState : CharacterBehaviour
 		}
 	}
 
-	private void OnGroundedChanged(bool isGrounded)
+	private void OnGroundedChanged(CharacterOnGround.State pState)
 	{
-		if (isGrounded)
+		switch (pState)
 		{
-			ReturnToDefaultIfState(State.Airborne);
-		}
-		else
-		{
-			SetState(State.Airborne);
+			case CharacterOnGround.State.Grounded:
+				ReturnToDefaultIfState(State.Airborne | State.Sliding);
+				break;
+			case CharacterOnGround.State.Sliding:
+				SetState(State.Sliding);
+				break;
+			case CharacterOnGround.State.Airborne:
+				SetState(State.Airborne);
+				break;
 		}
 	}
 

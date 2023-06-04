@@ -34,6 +34,7 @@ public class ModelAnimController : CharacterBehaviour
 		Character.Input.Secondary.onPerformed.AddListener(OnSecondary);
 		Character.Controller.OnJumpEvent.AddListener(OnJump);
 		Character.MoveState.OnStateChangeEvent.AddListener(SetMoveState);
+		Character.OnGround.OnStateChanged.AddListener(OnGroundChanged);
 	}
 
 	protected override void OnDestroyed()
@@ -42,6 +43,7 @@ public class ModelAnimController : CharacterBehaviour
 		Character.Input.Secondary.onPerformed.AddListener(OnSecondary);
 		Character.Controller.OnJumpEvent.RemoveListener(OnJump);
 		Character.MoveState.OnStateChangeEvent.RemoveListener(SetMoveState);
+		Character.OnGround.OnStateChanged.RemoveListener(OnGroundChanged);
 	}
 
 	protected override void Tick(float pDeltaTime)
@@ -53,7 +55,6 @@ public class ModelAnimController : CharacterBehaviour
 		SetFloat(KEY_MOVE_X, localVelocity.x, m_MoveDampening, pDeltaTime);
 		SetFloat(KEY_MOVE_Z, localVelocity.z, m_MoveDampening, pDeltaTime);
 		SetFloat(KEY_MOVE_SPEED, speed * m_MoveScalar, m_MoveDampening, pDeltaTime);
-		m_Animator.SetBool(KEY_GROUNDED, Character.Controller.IsGrounded);
 	}
 
 	private void OnJump()
@@ -101,6 +102,11 @@ public class ModelAnimController : CharacterBehaviour
 	private void SetCrouchBlend(float pValue)
 	{
 		m_Animator.SetFloat(KEY_CROUCH_BLEND, pValue);
+	}
+
+	private void OnGroundChanged(CharacterOnGround.State pState)
+	{
+		m_Animator.SetBool(KEY_GROUNDED, pState != CharacterOnGround.State.Airborne);
 	}
 
 	private void FootR() {} // SUPRESS ANIM EVENTS

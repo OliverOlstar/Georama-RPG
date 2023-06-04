@@ -10,7 +10,7 @@ namespace OliverLoescher
 		private Action<float> action;
 		[SerializeField, DisableInPlayMode]
 		private MonoUtil.UpdateType type;
-		[SerializeField, DisableInPlayMode]
+		[SerializeField, DisableInPlayMode, Tooltip("0 comes before 1")]
 		private float priority;
 
 		public Action<float> Action => action;

@@ -1,6 +1,4 @@
 using OliverLoescher.Debug2;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace OliverLoescher
