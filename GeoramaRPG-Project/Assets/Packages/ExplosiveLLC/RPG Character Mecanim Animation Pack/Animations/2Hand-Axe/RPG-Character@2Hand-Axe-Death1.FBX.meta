@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: a16cbf1e833a9a245959413aaed82913
 ModelImporter:
-  serializedVersion: 21300
+  serializedVersion: 22200
   internalIDToNameTable:
   - first:
       1: 100000
@@ -392,11 +392,11 @@ ModelImporter:
     animationRetargetingWarnings: "\nRetargeting quality report for clip 'Take 001':\n\tRightLowerLeg
       average position error 0.3 mm and maximum position error 2.8 mm at time 0:15
       (31.2%) Frame 15\n\tLeftUpperArm average position error 19.8 mm and maximum
-      position error 20.5 mm at time 0: 3 (6.3%) Frame 3\n\tLeftLowerArm average
+      position error 20.5 mm at time 0: 3 (6.2%) Frame 3\n\tLeftLowerArm average
       position error 19.8 mm and maximum position error 20.5 mm at time 0:27 (56.2%)
       Frame 27\n\tLeftHand average position error 19.8 mm and maximum position error
-      20.5 mm at time 0: 3 (6.3%) Frame 3\n\tRightUpperArm average position error
-      19.8 mm and maximum position error 20.5 mm at time 0: 3 (6.3%) Frame 3\n\tRightLowerArm
+      20.5 mm at time 0: 3 (6.2%) Frame 3\n\tRightUpperArm average position error
+      19.8 mm and maximum position error 20.5 mm at time 0: 3 (6.2%) Frame 3\n\tRightLowerArm
       average position error 19.9 mm and maximum position error 20.6 mm at time 1:
       7 (77.1%) Frame 37\n\tRightHand average position error 19.8 mm and maximum
       position error 20.5 mm at time 0: 4 (8.3%) Frame 4\n\tHead average position
@@ -450,6 +450,7 @@ ModelImporter:
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
+    importPhysicalCameras: 1
     importVisibility: 0
     importBlendShapes: 0
     importCameras: 0
@@ -477,6 +478,7 @@ ModelImporter:
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 0
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 2
@@ -1200,6 +1202,7 @@ ModelImporter:
   humanoidOversampling: 1
   avatarSetup: 2
   addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  importBlendShapeDeformPercent: 0
   remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
