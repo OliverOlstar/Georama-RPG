@@ -29,7 +29,7 @@ namespace OliverLoescher.Weapon
 		public void Explode(Vector3 pPoint, Projectile pProjectile)
 		{
 			Collider[] hits = Physics.OverlapSphere(pPoint, explosionRadius);
-			foreach (var hit in hits)
+			foreach (Collider hit in hits)
 			{
 				Rigidbody rb = hit.GetComponent<Rigidbody>();
 				if (rb != null)

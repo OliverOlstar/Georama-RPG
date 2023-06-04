@@ -46,14 +46,14 @@ public class ModelAnimController : CharacterBehaviour
 
 	protected override void Tick(float pDeltaTime)
 	{
-		Vector3 localVelocity = m_ModelForward.InverseTransformDirection(Character.Velocity);
+		Vector3 localVelocity = m_ModelForward.InverseTransformDirection(Character.Controller.Velocity);
 		localVelocity.y = 0.0f;
 		float speed = localVelocity.magnitude;
 		localVelocity.Normalize();
 		SetFloat(KEY_MOVE_X, localVelocity.x, m_MoveDampening, pDeltaTime);
 		SetFloat(KEY_MOVE_Z, localVelocity.z, m_MoveDampening, pDeltaTime);
 		SetFloat(KEY_MOVE_SPEED, speed * m_MoveScalar, m_MoveDampening, pDeltaTime);
-		m_Animator.SetBool(KEY_GROUNDED, Character.IsGrounded);
+		m_Animator.SetBool(KEY_GROUNDED, Character.Controller.IsGrounded);
 	}
 
 	private void OnJump()

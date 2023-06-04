@@ -51,34 +51,43 @@ public class KinematicForceController : KinematicController, ICharacterBehaviour
 	private MoveValues m_Values;
 	private int m_RemainingJumps = 0;
 
-	public UnityEvent OnJumpEvent = new UnityEvent();
+	[SerializeField]
+	private UnityEvent m_OnJumpEvent = new UnityEvent();
+	public UnityEvent OnJumpEvent => m_OnJumpEvent;
 
 	public Vector3 Velocity => m_Velocity;
-	public Vector3 Forward()
+	public Vector3 Forward
 	{
-		if (forwardTransform == null)
+		get
 		{
-			if (Capsule.upTransform == null)
+			if (forwardTransform == null)
 			{
-				return Vector3.forward;
+				if (Capsule.upTransform == null)
+				{
+					return Vector3.forward;
+				}
+				return Vector3.ProjectOnPlane(Vector3.forward, Capsule.Up).normalized;
 			}
-			return Vector3.ProjectOnPlane(Vector3.forward, Capsule.Up).normalized;
+			return Vector3.ProjectOnPlane(forwardTransform.forward, Capsule.Up).normalized;
 		}
-		return Vector3.ProjectOnPlane(forwardTransform.forward, Capsule.Up).normalized;
 	}
-	public Vector3 Right()
+	public Vector3 Right
 	{
-		if (forwardTransform == null)
+		get
 		{
-			if (Capsule.upTransform == null)
+			if (forwardTransform == null)
 			{
-				return Vector3.right;
+				if (Capsule.upTransform == null)
+				{
+					return Vector3.right;
+				}
+				return Vector3.ProjectOnPlane(Vector3.right, Capsule.Up).normalized;
 			}
-			return Vector3.ProjectOnPlane(Vector3.right, Capsule.Up).normalized;
+			return Vector3.ProjectOnPlane(forwardTransform.right, Capsule.Up).normalized;
 		}
-		return Vector3.ProjectOnPlane(forwardTransform.right, Capsule.Up).normalized;
 	}
-	
+	public Vector3 Up => Capsule.Up;
+
 	float ICharacterBehaviour.Priority => 0;
 
 	void ICharacterBehaviour.Initalize(Character pCharacter)
@@ -118,8 +127,8 @@ public class KinematicForceController : KinematicController, ICharacterBehaviour
 		{
 			return;
 		}
-		m_Velocity += Forward() * input.y * pDeltaTime * m_Values.ForwardAcceleration;
-		m_Velocity += Right() * input.x * pDeltaTime * m_Values.SideAcceleration;
+		m_Velocity += Forward * input.y * pDeltaTime * m_Values.ForwardAcceleration;
+		m_Velocity += Right * input.x * pDeltaTime * m_Values.SideAcceleration;
 	}
 
 	private void DoJump()
@@ -128,7 +137,7 @@ public class KinematicForceController : KinematicController, ICharacterBehaviour
 		{
 			verticalVelocity = m_JumpForce;
 			isGrounded = false;
-			OnJumpEvent.Invoke();
+			m_OnJumpEvent.Invoke();
 		}
 	}
 

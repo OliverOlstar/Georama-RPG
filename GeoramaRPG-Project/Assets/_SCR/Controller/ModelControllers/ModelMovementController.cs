@@ -52,7 +52,7 @@ public class ModelMovementController : CharacterBehaviour
 			return;
 		}
 		Vector3 eularAngles = transform.localEulerAngles;
-		Quaternion toWorld = Quaternion.FromToRotation(Util.Horizontalize(transform.forward), Character.Forward);
+		Quaternion toWorld = Quaternion.FromToRotation(Util.Horizontalize(transform.forward), Character.Controller.Forward);
 		Vector3 move = toWorld * Character.Input.Move.InputHorizontal;
 		eularAngles.x = move.z * m_TiltScalar; // Forward
 		eularAngles.z = -move.x * m_TiltScalar; // Right
@@ -80,13 +80,13 @@ public class ModelMovementController : CharacterBehaviour
 			if (m_Target == null)
 			{
 				// No Target
-				return Character.Forward;
+				return Character.Controller.Forward;
 			}
 			// Target
-			return Util.Horizontalize(m_Target.position - transform.position, Character.Up);
+			return Util.Horizontalize(m_Target.position - transform.position, Character.Controller.Up);
 		}
 		// RotationTarget.Velocity
-		return Util.Horizontalize(Character.Velocity, Character.Up);
+		return Util.Horizontalize(Character.Controller.Velocity, Character.Controller.Up);
 	}
 
 	private void UpdateState()
