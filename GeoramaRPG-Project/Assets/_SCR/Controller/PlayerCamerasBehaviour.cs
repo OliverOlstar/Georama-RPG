@@ -12,18 +12,18 @@ public class PlayerCamerasBehaviour : CharacterBehaviour
 
 	protected override void OnEnabled()
 	{
-		Character.GetBehaviour<CharacterInteractions>().OnTargetChanged.AddListener(OnLockOnInput);
-		OnLockOnInput(null);
+		Character.GetBehaviour<CharacterInteractions>().OnTargetChanged.AddListener(OnTargetChanged);
+		OnTargetChanged(null);
 	}
 
 	protected override void OnDisabled()
 	{
-		Character.GetBehaviour<CharacterInteractions>().OnTargetChanged.RemoveListener(OnLockOnInput);
+		Character.GetBehaviour<CharacterInteractions>().OnTargetChanged.RemoveListener(OnTargetChanged);
 	}
 
 	protected override void Tick(float pDeltaTime) { }
 
-	private void OnLockOnInput(ITargetable target)
+	private void OnTargetChanged(ITargetable target)
 	{
 		bool hasTarget = target != null;
 		if (hasTarget)

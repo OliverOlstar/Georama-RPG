@@ -11,6 +11,7 @@ public class ModelMovementController : CharacterBehaviour
 	{
 		Velocity = 0,
 		Target,
+		Override,
 		None,
 	}
 
@@ -21,10 +22,10 @@ public class ModelMovementController : CharacterBehaviour
 
 	[Header("Rotation"), SerializeField]
 	private float m_RotationDampening = 5.0f;
-	[SerializeField]
+	
 	private Transform m_Target;
-
 	private RotationTarget m_RotationTarget = RotationTarget.Velocity;
+	private Vector3 m_OverrideRotationDirection = Vector3.zero;
 
 	protected override void OnInitalize()
 	{
@@ -68,12 +69,19 @@ public class ModelMovementController : CharacterBehaviour
 		transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(forward), m_RotationDampening * pDeltaTime);
 	}
 
+	public void SetOverrideFacing(Vector3 pDirection)
+	{
+		m_OverrideRotationDirection = pDirection;
+		m_RotationTarget = RotationTarget.Override;
+	}
+	public void ClearOverrideFacing() => UpdateRotationTarget();
+
 	private Vector3 GetForward()
 	{
 		switch (m_RotationTarget)
 		{
 			case RotationTarget.None:
-				return Util.Horizontal(transform.forward);
+				return Util.Horizontalize(transform.forward);
 
 			case RotationTarget.Target:
 				if (m_Target == null)
@@ -82,10 +90,13 @@ public class ModelMovementController : CharacterBehaviour
 					return Character.Controller.Forward;
 				}
 				// Target
-				return Util.Horizontalize(m_Target.position - transform.position, Character.Controller.Up);
+				return Util.Horizontalize(m_Target.position - transform.position, Vector3.up);
 
 			case RotationTarget.Velocity:
-				return Util.Horizontalize(Character.Controller.Velocity, Character.Controller.Up);
+				return Util.Horizontalize(Character.Controller.Velocity, Vector3.up);
+
+			case RotationTarget.Override:
+				return m_OverrideRotationDirection;
 		}
 		Core.DebugUtil.DevException(new NotImplementedException());
 		return Vector3.forward;
@@ -93,7 +104,16 @@ public class ModelMovementController : CharacterBehaviour
 
 	private void OnMoveStateChange(CharacterMoveState.State pState)
 	{
-		switch (pState)
+		if (m_RotationTarget == RotationTarget.Override)
+		{
+			return;
+		}
+		UpdateRotationTarget();
+	}
+
+	private void UpdateRotationTarget()
+	{
+		switch (Character.MoveState.ActiveState)
 		{
 			case CharacterMoveState.State.Strafe:
 				m_RotationTarget = RotationTarget.Target;

@@ -69,7 +69,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""id"": ""32986f7a-e8a5-44ac-af30-faf8503506e5"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Hold"",
                     ""initialStateCheck"": false
                 },
                 {
@@ -88,6 +88,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dodge"",
+                    ""type"": ""Button"",
+                    ""id"": ""5d623999-36d8-4942-8c0d-fc6e055c2001"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Tap"",
                     ""initialStateCheck"": false
                 },
                 {
@@ -210,7 +219,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""5a6e8cdb-ffcb-4c49-a95f-9b7b711e8265"",
-                    ""path"": ""<Keyboard>/shift"",
+                    ""path"": ""<Keyboard>/leftShift"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
@@ -358,6 +367,28 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Secondary"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""df8e3b87-6b45-4c29-bcad-d957cfa85e20"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Dodge"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f2926604-9edf-46e1-973c-426db518098b"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Dodge"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1170,6 +1201,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_FPS_Sprint = m_FPS.FindAction("Sprint", throwIfNotFound: true);
         m_FPS_Walk = m_FPS.FindAction("Walk", throwIfNotFound: true);
         m_FPS_Jump = m_FPS.FindAction("Jump", throwIfNotFound: true);
+        m_FPS_Dodge = m_FPS.FindAction("Dodge", throwIfNotFound: true);
         m_FPS_Primary = m_FPS.FindAction("Primary", throwIfNotFound: true);
         m_FPS_Secondary = m_FPS.FindAction("Secondary", throwIfNotFound: true);
         m_FPS_Strafe = m_FPS.FindAction("Strafe", throwIfNotFound: true);
@@ -1273,6 +1305,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_FPS_Sprint;
     private readonly InputAction m_FPS_Walk;
     private readonly InputAction m_FPS_Jump;
+    private readonly InputAction m_FPS_Dodge;
     private readonly InputAction m_FPS_Primary;
     private readonly InputAction m_FPS_Secondary;
     private readonly InputAction m_FPS_Strafe;
@@ -1287,6 +1320,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Sprint => m_Wrapper.m_FPS_Sprint;
         public InputAction @Walk => m_Wrapper.m_FPS_Walk;
         public InputAction @Jump => m_Wrapper.m_FPS_Jump;
+        public InputAction @Dodge => m_Wrapper.m_FPS_Dodge;
         public InputAction @Primary => m_Wrapper.m_FPS_Primary;
         public InputAction @Secondary => m_Wrapper.m_FPS_Secondary;
         public InputAction @Strafe => m_Wrapper.m_FPS_Strafe;
@@ -1320,6 +1354,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
+            @Dodge.started += instance.OnDodge;
+            @Dodge.performed += instance.OnDodge;
+            @Dodge.canceled += instance.OnDodge;
             @Primary.started += instance.OnPrimary;
             @Primary.performed += instance.OnPrimary;
             @Primary.canceled += instance.OnPrimary;
@@ -1354,6 +1391,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
+            @Dodge.started -= instance.OnDodge;
+            @Dodge.performed -= instance.OnDodge;
+            @Dodge.canceled -= instance.OnDodge;
             @Primary.started -= instance.OnPrimary;
             @Primary.performed -= instance.OnPrimary;
             @Primary.canceled -= instance.OnPrimary;
@@ -1795,6 +1835,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnSprint(InputAction.CallbackContext context);
         void OnWalk(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnDodge(InputAction.CallbackContext context);
         void OnPrimary(InputAction.CallbackContext context);
         void OnSecondary(InputAction.CallbackContext context);
         void OnStrafe(InputAction.CallbackContext context);

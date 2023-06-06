@@ -51,6 +51,7 @@ public class CharacterInteractions : CharacterBehaviour
 			if (Util.DistanceGreaterThan(m_CurrentTarget.Transform.position, transform.position, m_MaxDistance) || !IsPointVisible(m_CurrentTarget.Transform.position))
 			{
 				m_CurrentTarget = null;
+				Character.Input.ClearLockOnIfIsToggle();
 				OnTargetChanged.Invoke(m_CurrentTarget);
 			}
 		}

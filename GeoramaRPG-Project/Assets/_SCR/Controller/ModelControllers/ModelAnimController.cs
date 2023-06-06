@@ -10,13 +10,13 @@ public class ModelAnimController : CharacterBehaviour
 	private const string KEY_MOVE_SPEED = "Move_Speed";
 	private const string KEY_GROUNDED = "Grounded";
 	private const string KEY_JUMP = "Jump";
+	private const string KEY_DODGE = "Dodge";
+	private const string KEY_DODGE_INDEX = "Dodge_State";
 	private const string KEY_RIGHT_ATTACK = "R1";
 	private const string KEY_LEFT_ATTACK = "L1";
 	private const string KEY_MOVE_STATE = "Move_State";
 	private const string KEY_CROUCH_BLEND = "Crouch_Blend";
 
-	[SerializeField]
-	private Transform m_ModelForward = null;
 	[Header("Values"), SerializeField]
 	private float m_MoveScalar = 0.08f;
 	[SerializeField]
@@ -48,7 +48,7 @@ public class ModelAnimController : CharacterBehaviour
 
 	protected override void Tick(float pDeltaTime)
 	{
-		Vector3 localVelocity = m_ModelForward.InverseTransformDirection(Character.Controller.Velocity);
+		Vector3 localVelocity = Character.Model.InverseTransformDirection(Character.Controller.Velocity);
 		localVelocity.y = 0.0f;
 		float speed = localVelocity.magnitude;
 		localVelocity.Normalize();
@@ -60,6 +60,12 @@ public class ModelAnimController : CharacterBehaviour
 	private void OnJump()
 	{
 		m_Animator.SetTrigger(KEY_JUMP);
+	}
+
+	public void PlayDodge(CharacterMoveDodge.DodgeType pDodgeType)
+	{
+		m_Animator.SetInteger(KEY_DODGE_INDEX, (int)pDodgeType);
+		m_Animator.SetTrigger(KEY_DODGE);
 	}
 
 	private void OnPrimary()
@@ -108,9 +114,4 @@ public class ModelAnimController : CharacterBehaviour
 	{
 		m_Animator.SetBool(KEY_GROUNDED, pState != CharacterOnGround.State.Airborne);
 	}
-
-	private void FootR() {} // SUPRESS ANIM EVENTS
-	private void FootL() {}
-	private void Hit() {}
-	private void Land() {}
 }

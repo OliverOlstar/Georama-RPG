@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Sirenix.OdinInspector;
 
 public class CharacterMoveState : CharacterBehaviour
 {
@@ -17,14 +16,18 @@ public class CharacterMoveState : CharacterBehaviour
 		Airborne = 1 << 7,
 		Sliding = 1 << 8,
 		Swim = 1 << 9,
+		Dodge = 1 << 10,
 	}
 
 	private State m_State = State.Run;
+	private State m_PreviousState = State.Run;
 	
+	[FoldoutGroup("Events")]
 	public UnityEvent<State> OnStateChangeEvent = new UnityEvent<State>();
 
-	public override float Priority => 1000; // Last
+	public override float Priority => int.MaxValue; // Last
 	public State ActiveState => m_State;
+	public State PreviousState => m_PreviousState;
 
 	public bool IsState(State pState) => (pState & m_State) != 0;
 
@@ -36,6 +39,8 @@ public class CharacterMoveState : CharacterBehaviour
 		Character.Input.Crouch.onCanceled.AddListener(OnCrouchCanceled);
 		Character.Input.LockOn.onPerformed.AddListener(OnLockOnPreformed);
 		Character.Input.LockOn.onCanceled.AddListener(OnLockOnCanceled);
+		Character.Input.Dodge.onPerformed.AddListener(OnDodgePreformed);
+		Character.AnimEvents.DodgeEndEvent.AddListener(OnDodgeComplete);
 		Character.OnGround.OnStateChanged.AddListener(OnGroundedChanged);
 
 		OnStateChangeEvent.Invoke(m_State); // Inital State
@@ -49,6 +54,8 @@ public class CharacterMoveState : CharacterBehaviour
 		Character.Input.Crouch.onCanceled.RemoveListener(OnCrouchCanceled);
 		Character.Input.LockOn.onPerformed.RemoveListener(OnLockOnPreformed);
 		Character.Input.LockOn.onCanceled.RemoveListener(OnLockOnCanceled);
+		Character.Input.Dodge.onPerformed.RemoveListener(OnDodgePreformed);
+		Character.AnimEvents.DodgeEndEvent.RemoveListener(OnDodgeComplete);
 		Character.OnGround.OnStateChanged.RemoveListener(OnGroundedChanged);
 	}
 
@@ -99,6 +106,9 @@ public class CharacterMoveState : CharacterBehaviour
 
 	private void OnLockOnPreformed() => SetStateIfState(State.Strafe, State.Run | State.Walk);
 	private void OnLockOnCanceled() => ReturnToDefaultIfState(State.Strafe);
+	
+	private void OnDodgePreformed() => SetStateIfState(State.Dodge, State.Run | State.Walk | State.Strafe | State.Crouch);
+	private void OnDodgeComplete() => ReturnToDefaultIfState(State.Dodge);
 
 	public void SetState(State pState)
 	{
@@ -106,7 +116,7 @@ public class CharacterMoveState : CharacterBehaviour
 		{
 			return;
 		}
-
+		m_PreviousState = m_State;
 		m_State = pState;
 		OnStateChangeEvent.Invoke(m_State);
 	}

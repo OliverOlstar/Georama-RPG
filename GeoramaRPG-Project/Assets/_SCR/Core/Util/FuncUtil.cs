@@ -20,11 +20,20 @@ namespace OliverLoescher
 		}
 		public static float SmoothStep(Vector2 pMinMax, float pIn) => SmoothStep(pMinMax.x, pMinMax.y, pIn);
 
-		public static float SafeAngle(float pAngle)
+		public static float SafeAngle(in float pAngle)
 		{
-			if (pAngle > 180)
+			if (pAngle > 180.0f)
 			{
-				pAngle -= 360;
+				return pAngle - 360.0f;
+			}
+			return pAngle;
+		}
+
+		public static float InverseSafeAngle(in float pAngle)
+		{
+			if (pAngle < 0.0f)
+			{
+				return pAngle + 360.0f;
 			}
 			return pAngle;
 		}

@@ -8,15 +8,28 @@ public class Character : MonoBehaviour
 
 	[SerializeField]
 	private InputBridge_KinematicController m_Input = null;
+	[SerializeField]
+	private Transform m_ModelForward = null;
+	[SerializeField]
+	private Transform m_CameraForward = null;
 
 	private CharacterMoveState m_MoveState;
 	private CharacterOnGround m_OnGround;
-	private CharacterMoveController m_Controller;
+	private CharacterMoveManager m_Controller;
+	private ModelAnimController m_AnimController;
+	private ModelAnimEvents m_AnimEvents;
+	private ModelMovementController m_ModelMovement;
 
 	public InputBridge_KinematicController Input => m_Input;
 	public CharacterMoveState MoveState => m_MoveState;
 	public CharacterOnGround OnGround => m_OnGround;
-	public CharacterMoveController Controller => m_Controller;
+	public CharacterMoveManager Controller => m_Controller;
+	public ModelAnimController AnimController => m_AnimController;
+	public ModelAnimEvents AnimEvents => m_AnimEvents;
+	public ModelMovementController ModelMovement => m_ModelMovement;
+
+	public Transform Model => m_ModelForward;
+	public Transform Camera => m_CameraForward;
 
 	private void Awake()
 	{
@@ -29,6 +42,9 @@ public class Character : MonoBehaviour
 		GetBehaviour(out m_MoveState);
 		GetBehaviour(out m_OnGround);
 		GetBehaviour(out m_Controller);
+		GetBehaviour(out m_AnimController);
+		GetBehaviour(out m_AnimEvents);
+		GetBehaviour(out m_ModelMovement);
 		foreach (ICharacterBehaviour behaviour in behaviours)
 		{
 			behaviour.Initalize(this);

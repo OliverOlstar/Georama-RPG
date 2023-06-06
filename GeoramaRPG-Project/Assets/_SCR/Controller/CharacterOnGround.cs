@@ -121,11 +121,15 @@ public class CharacterOnGround : CharacterBehaviour
 		m_IsFollowingGround = false;
 
 		Vector3 displacement = m_FollowTransform.position - m_FollowPosition;
-		Character.Controller.AddVelocity(displacement * Time.fixedDeltaTime * m_DisconnectVelocityScalar);
+		Character.Controller.ModifyVelocity(displacement * Time.fixedDeltaTime * m_DisconnectVelocityScalar);
 	}
 
 	private void FollowGround()
 	{
+		if (!m_FollowGround)
+		{
+			return;
+		}
 		if (m_State == State.Airborne || !TryGetNonStaticGroundTransform(out Transform transform, out Vector3 point))
 		{
 			if (m_IsFollowingGround)
