@@ -50,7 +50,7 @@ public class CharacterMoveDodge : CharacterMoveManager.MoveController
 		{
 			return;
 		}
-		Character.Controller.SetVelocity(m_MoveDirection * m_DodgeSpeed);
+		Character.Controller.SetVelocity(m_MoveDirection * Character.AnimController.GetRootMotionLastEvaluatedFrame().magnitude * m_DodgeSpeed);
 	}
 
 	private void OnDodgeStart()
@@ -64,6 +64,7 @@ public class CharacterMoveDodge : CharacterMoveManager.MoveController
 		m_MoveDirection = pMove;
 		Character.ModelMovement.SetOverrideFacing(pFacing);
 		Character.AnimController.PlayDodge(pType);
+		Character.AnimController.ResetRootMotion();
 	}
 
 	private void GetDodgeDirection(out Vector3 pMove, out Vector3 pFacing, out DodgeType pType)

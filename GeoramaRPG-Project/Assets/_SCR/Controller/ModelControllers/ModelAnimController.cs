@@ -68,6 +68,15 @@ public class ModelAnimController : CharacterBehaviour
 		m_Animator.SetTrigger(KEY_DODGE);
 	}
 
+	private Vector3 m_RootMotion = Vector3.zero;
+	public Vector3 GetRootMotionLastEvaluatedFrame()
+	{
+		Vector3 motion = m_RootMotion;
+		m_RootMotion = Vector3.zero;
+		return motion;
+	}
+	public void ResetRootMotion() { m_RootMotion = Vector3.zero; }
+
 	private void OnPrimary()
 	{
 		m_Animator.ResetTrigger(KEY_LEFT_ATTACK);
@@ -114,4 +123,6 @@ public class ModelAnimController : CharacterBehaviour
 	{
 		m_Animator.SetBool(KEY_GROUNDED, pState != CharacterOnGround.State.Airborne);
 	}
+
+	private void OnAnimatorMove() { m_RootMotion += m_Animator.deltaPosition; }
 }
